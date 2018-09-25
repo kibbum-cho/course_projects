@@ -1,0 +1,21 @@
+
+{
+    "recitations":[
+        {
+            "section":"s1",
+            "instructor":"instrudtor A",
+            "day_time":"mon/ 12",
+            "location":"cs",
+            "ta_1":"Ali Afzal",
+            "ta_2":"Chaeyoung Lee"
+        },
+        {
+            "section":"s2",
+            "instructor":"instructor B",
+            "day_time":"tue / 11",
+            "location":"hm",
+            "ta_1":"Wonje Kang",
+            "ta_2":"Robert Trujillo"
+        }
+    ]
+}

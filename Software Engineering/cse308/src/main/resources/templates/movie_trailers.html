@@ -1,0 +1,135 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta http-equiv="Content-Type" content="text/html"/>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="../../css/my_style.css" th:href="@{/css/my_style.css}"/>
+    <link rel="stylesheet" href="../../fonts/ionicons.min.css" th:href="@{/fonts/ionicons.min.css}"/>
+    <link rel="stylesheet" href="../../css/Footer-Clean.css" th:href="@{/css/Footer-Clean.css}"/>
+
+    <title>Movie Trailers</title>
+</head>
+
+
+<body>
+<!-- Navbar -->
+<div sec:authorize="isAnonymous()"><div th:replace="fragments/navbar">Navbar</div></div>
+<div sec:authorize="hasRole('ROLE_USER')"><div th:replace="fragments/user_navbar">Navbar</div></div>
+<div sec:authorize="hasRole('ROLE_CRITIC')"><div th:replace="fragments/user_navbar">Navbar</div></div>
+<div sec:authorize="hasRole('ROLE_ADMIN')"><div th:replace="fragments/admin_navbar">Navbar</div></div>
+
+
+<!-- Profile body -->
+<div class="container">
+    <div class="row">
+        <!-- Side bar -->
+        <div class="col-sm-12 col-md-7 col-lg-4 mb-3">
+            <div class="jumbotron-side">
+                <div class="nav flex-column justify-content-center">
+                    <div class="card-poster-container align-items-center">
+                        <a th:href="@{/movie_details(id=${movie.movieId})}">
+                            <img th:src="@{${movie.poster}}" class="card-detail-poster" alt="poster"/>
+                        </a>
+                    </div>
+                    <strong class="mt-2">
+                        <div th:text="${movie.title+ ' ('+movie.getReleaseYear()+')'}">
+                            title
+                        </div>
+                    </strong>
+                    <strong class="mt-2">Score</strong>
+                    <div>
+                        <p th:text="| ${movie.ratingAvg}|" style="word-wrap: break-word;">
+                            rating
+                        </p>
+                    </div>
+                    <strong class="mt-2">Overview</strong>
+                    <div>
+                        <p th:text="| ${movie.overview}|" style="word-wrap: break-word;">
+                            overview
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trailer thumbnails -->
+        <div class="col-sm-12 col-md-12 col-lg-8 mb-3">
+            <!-- Trailer -->
+            <div th:if="${trailers.size()>0}" class="details-jumbotron mt-1 mb-4">
+                <h6 class="border-bottom border-gray pb-2 mb-0">ALL TRAILERS</h6>
+                <div class="row container">
+                    <div th:each="trailer,iterStat : ${trailers}" class="video-thumbnail-container">
+                        <img th:src="@{${trailer.videoThumb}}" class="video-thumbnail-img" alt="video_thumbnail"/>
+                        <a href="#" data-toggle="modal" th:attr="data-target=${'#trailer'+iterStat.index}">
+                            <div class="video-img-overlay">
+                                <img class="glyph-icon" src="svg/si-glyph-circle-triangle-right.svg"/>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trailer Modal -->
+            <div th:each="trailer,iterStat : ${trailers}" th:if="${trailers.size()>0 and iterStat.index<4}" class="modal fade trailer" th:id="${'trailer'+iterStat.index}" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content video-modal">
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" th:src="@{${trailer.video}}" controls="controls"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<!-- footer -->
+<div th:replace="fragments/footer">Navbar</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="../../js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<script src="../../js/popper.min.js" th:src="@{/js/popper.min.js}"></script>
+<script src="../../js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+
+<script th:inline="javascript">
+    var stopVideo = function ( element ) {
+        var iframe = element.querySelector( 'iframe');
+        var video = element.querySelector( 'video' );
+        if ( iframe !== null ) {
+            var iframeSrc = iframe.src;
+            iframe.src = iframeSrc;
+        }
+        if ( video !== null ) {
+            video.pause();
+        }
+    };
+
+    $(document).ready(function(){
+        $('.modal.trailer').on('shown.bs.modal', function (e) {
+            /*$(this).find('video')[0].play();
+            var symbol = $("#video1")[0].src.indexOf("?") > -1 ? "&" : "?";
+            $("#video1")[0].src += symbol + "autoplay=1";
+            */
+        });
+        $('.modal.trailer').on('hidden.bs.modal', function (e) {
+            /*$(this).find('video')[0].pause();*/
+            stopVideo(this);
+        });
+    });
+</script>
+
+
+</body>
+</html>

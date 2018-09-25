@@ -1,0 +1,122 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta http-equiv="Content-Type" content="text/html"/>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="../../css/my_style.css" th:href="@{/css/my_style.css}"/>
+    <link rel="stylesheet" href="../../fonts/ionicons.min.css" th:href="@{/fonts/ionicons.min.css}"/>
+    <link rel="stylesheet" href="../../css/Footer-Clean.css" th:href="@{/css/Footer-Clean.css}"/>
+
+    <title>All Critic Tv Reviews</title>
+</head>
+
+
+<body>
+<!-- Navbar -->
+<div sec:authorize="isAnonymous()"><div th:replace="fragments/navbar">Navbar</div></div>
+<div sec:authorize="hasRole('ROLE_USER')"><div th:replace="fragments/user_navbar">Navbar</div></div>
+<div sec:authorize="hasRole('ROLE_ADMIN')"><div th:replace="fragments/admin_navbar">Navbar</div></div>
+
+
+<!-- Profile body -->
+<div class="container">
+    <div class="row">
+        <!-- Side bar -->
+        <div class="col-sm-12 col-md-7 col-lg-4 mb-3">
+            <div class="jumbotron-side">
+                <div class="nav flex-column justify-content-center">
+                    <div class="card-poster-container align-items-center">
+                        <a th:href="@{/tv_details(id=${tv.tvId})}">
+                            <img th:src="@{${tv.poster}}" class="card-detail-poster" alt="poster"/>
+                        </a>
+                    </div>
+                    <strong class="mt-2">
+                        <div th:text="${tv.title+ ' ('+tv.getReleaseYear()+')'}">
+                            title
+                        </div>
+                    </strong>
+                    <strong class="mt-2">Score</strong>
+                    <div>
+                        <p th:text="| ${tv.rating}|" style="word-wrap: break-word;">
+                            score
+                        </p>
+                    </div>
+                    <strong class="mt-2">Overview</strong>
+                    <div>
+                        <p th:text="| ${tv.overview}|" style="word-wrap: break-word;">
+                            overview
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- User detail colum -->
+        <div class="col-sm-12 col-md-12 col-lg-8 mb-3">
+            <div class="jumbotron details-jumbotron" th:fragment="reviews">
+                <div th:unless="${criticReviews.size()>0}">
+                    <h6 class="border-bottom border-gray pb-2 mb-2">All CRITIC REVIEWS</h6>
+                    <span>No review yet.</span>
+                </div>
+                <!-- Critic Reviews -->
+                <h6 th:if="${criticReviews.size()>0}" class="border-bottom border-gray pb-2 mb-0">All CRITIC REVIEWS</h6>
+                <div th:each="criticReview,iterStat : ${criticReviews}" class="media flex-md-row pt-3">
+                    <div class="review-thumbnail-container">
+                        <a th:href="@{/criticHome(criticId=${criticReview.critic.criticId})}">
+                            <img th:src="@{(${criticReview.critic.photo}?: '/img/default.gif')}" alt="..." class="review-img-thumbnail"/>
+                        </a>
+                    </div>
+                    <div class="d-flex flex-column align-items-start w-100">
+                        <div class="d-flex w-100 mb-1">
+                            <div>
+                                <span class="ml-2">@</span>
+                                <a th:href="@{/criticHome(criticId=${criticReview.critic.criticId})}" style="color: white;">
+                                    <span th:text="|${criticReview.critic.firstName} ${criticReview.critic.lastName}|">@User Name</span>
+                                </a>
+                            </div>
+                            <div class="ml-auto mr-1">Critic score:</div>
+                            <div class="mr-2">
+                                <span th:text="${criticReview.rating==''?'no score':criticReview.rating}">score</span>
+                            </div>
+                            <a href="#" th:attr="data-id=${criticReview.reviewId}" class="report critic-review ion-alert-circled"></a>
+                        </div>
+                        <p class="media-body pb-3 mb-0 small lh-125 border-bottom w-100" th:text="${criticReview.review}">
+                            Review
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="container text-center mt-3 mb-3">
+    <a target="_blank" href="https://adclick.g.doubleclick.net/pcs/click?xai=AKAOjsuW0I9OQVKOiWTnETUY51KDAwh-QgwrDB22euHjMHQ1VHKxiQbJ6MfKVOc5Nslc9J0QQzJs_-pMt6oMw-9hVijtxCW4Wv2JYoToAiT24ovnZDr69CBIuv4VFN3B9gMjO9ISWOxirmG1UrIIg37T3mR_PlJxwhQii4HOBzz9FfFKJL0weDV6ll-O140p48tScKaYV03_AL8njnJZN-3vamo-4QN_GGG3yjGc5Z-2s5fzRLnz4TaM_CTH6y5nAD5pBySekAouHhzjsjAZfLKgEjXcGkrUMLDJC0zWFUtnYe2JZzc99cWlju3JICcfk0JcVh2x8CbmW8Dsif7FofW-QQuZ7zesawImLtaDiA&amp;sai=AMfl-YRUVnL7Hsa3FOHqmtBPwtFaNmP9cOcNjdvGjrcoNUwkMoeNuZsG8lkTIFfwSkGDIsPVOH-RfnhMMI4EbuVNmdJTOHYgm9fjqm8zCJpgpZEh-v1pAOvjtpDQfxY&amp;sig=Cg0ArKJSzN9Qqm86pAKl&amp;urlfix=1&amp;adurl=https://try.digitalocean.com/performance/%3Futm_medium%3Ddisplay%26utm_source%3Dstackoverflow%26utm_campaign%3D2018_Brand%26utm_content%3DDO_UI_728x90_Light%26utm_term%3DNewYork">
+        <img src="https://s0.2mdn.net/8354950/1-DO_UI_728x90_Light.jpg" alt="Advertisement" border="0" width="728" height="90" class="align-content-center">
+    </a>
+</div>
+
+<!-- footer -->
+<div th:replace="fragments/footer">Navbar</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="../../js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<script src="../../js/popper.min.js" th:src="@{/js/popper.min.js}"></script>
+<script src="../../js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+
+
+
+
+</body>
+</html>

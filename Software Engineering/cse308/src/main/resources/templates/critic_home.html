@@ -1,0 +1,228 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta http-equiv="Content-Type" content="text/html"/>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="../../css/my_style.css" th:href="@{/css/my_style.css}"/>
+    <link rel="stylesheet" href="../../fonts/ionicons.min.css" th:href="@{/fonts/ionicons.min.css}"/>
+    <link rel="stylesheet" href="../../css/Footer-Clean.css" th:href="@{/css/Footer-Clean.css}"/>
+    <link rel="stylesheet" href="../../css/star-rating.css" th:href="@{/css/star-rating.css}"/>
+    <link rel="stylesheet" href="../../css/ratings.css" th:href="@{/css/ratings.css}"/>
+
+    <title>Critic Home</title>
+</head>
+
+
+<body>
+<!-- Navbar -->
+<div sec:authorize="isAnonymous()"><div th:replace="fragments/navbar">Navbar</div></div>
+<div sec:authorize="hasRole('ROLE_USER')"><div th:replace="fragments/user_navbar">Navbar</div></div>
+<div sec:authorize="hasRole('ROLE_ADMIN')"><div th:replace="fragments/admin_navbar">Navbar</div></div>
+
+
+<!-- Profile body -->
+<div class="container">
+    <div class="row">
+        <!-- Side bar -->
+        <div class="col-sm-12 col-md-7 col-lg-4 mb-3">
+            <div class="jumbotron-side">
+                <div class="d-flex">
+                    <h5 class="mb-4"><strong>Critic Details</strong></h5>
+                    <a href="#" th:attr="data-id=${critic.criticId}" class="report report-critic ion-alert-circled ml-auto"></a>
+                </div>
+                <div class="nav flex-column justify-content-center">
+                    <div class="profile-thumbnail-container">
+                        <img class="profile-thumbnail-img" th:src="@{(${critic.photo}?: '/img/default.gif')}" alt="Profile img"/>
+                    </div>
+                    <strong class="mt-2">Critic Name</strong>
+                    <div th:text="|- ${critic.firstName} ${critic.lastName}|">
+                        critic name
+                    </div>
+                    <strong class="mt-2">Total Number of Reviews</strong>
+                    <div th:text="|- ${movieReviews.size()} reviews|">
+                        number of reviews
+                    </div>
+                    <strong class="mt-2">Groups</strong>
+                    <div th:text="${critic.group}?: 'None' "></div>
+                    <strong class="mt-2">Publications</strong>
+                    <div th:text="${critic.publication}?: 'None'"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- User detail colum -->
+        <div class="col-sm-12 col-md-12 col-lg-8 mb-3">
+            <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="pills-reviews-tab" data-toggle="pill" href="#pills-reviews" role="tab" aria-controls="pills-reviews" aria-selected="false">Reviews</a>
+                </li>
+            </ul>
+
+            <!-- Tabs -->
+            <div class="tab-content" id="pills-tabContent">
+                <!-- Reviews -->
+                <div class="tab-pane fade show active" id="pills-reviews" role="tabpanel" aria-labelledby="pills-reviews-tab">
+                    <div class="details-jumbotron pb-5">
+                        <nav>
+                            <div class="nav nav-tabs" role="tablist">
+                                <a class="nav-item nav-link active" id="nav-review-movie-tab" data-toggle="tab" href="#nav-review-movie" role="tab" aria-controls="nav-review-movie" aria-selected="true">Movies</a>
+                                <a class="nav-item nav-link" id="nav-review-tv-tab" data-toggle="tab" href="#nav-review-tv" role="tab" aria-controls="nav-review-tv" aria-selected="false">TV</a>
+                            </div>
+                        </nav>
+
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="nav-review-movie" role="tabpanel" aria-labelledby="nav-review-movie-tab">
+                                <div th:fragment="movieReviews" th:each="review,iterStat : ${movieReviews}" class="media pt-3 border-bottom pb-3">
+                                    <a th:href="@{/movie_details(id=${review.movieId})}">
+                                        <img th:src="@{${review.movie.poster}}" alt="..." class="ratings-list-poster"/>
+                                    </a>
+                                    <div class="media-body pb-3 mb-0 small lh-125 ">
+                                        <div class="d-flex pr-2">
+                                            <a th:href="@{/movie_details(id=${review.movieId})}" style="color: white;">
+                                                <strong th:text="${review.movie.title}" class="text-gray">Title (2018)</strong>
+                                                <span class="ml-2">(</span>
+                                                <span th:text="${review.movie.getReleaseYear()}"></span>
+                                                <span>)</span>
+                                            </a>
+                                            <div class="ml-auto mr-2">Score:</div>
+                                            <div class="d-flex">
+                                                <!--<input class="rating rating-loading score p-0" th:value="${review.rating}" data-stars="5" data-min="0" data-max="5" data-size="xxxs" disabled=true data-show-clear="false" data-show-caption="false"/>-->
+                                                <span th:text="${review.rating}?:'no score'" class="mr-2">No score</span>
+                                            </div>
+                                        </div>
+                                        <p th:text="${review.review}">
+                                            Review
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="nav-review-tv" role="tabpanel" aria-labelledby="nav-review-tv-tab">
+                                <div th:fragment="tvReviews" th:each="review,iterStat : ${tvReviews}" class="media pt-3 border-bottom pb-3">
+                                    <a th:href="@{/tv_details(id=${review.tvId})}">
+                                        <img th:src="@{${review.tv.poster}}" alt="..." class="ratings-list-poster"/>
+                                    </a>
+                                    <div class="media-body pb-3 mb-0 small lh-125 ">
+                                        <div class="d-flex pr-2">
+                                            <a th:href="@{/tv_details(id=${review.tvId})}" style="color: white;">
+                                                <strong th:text="${review.tv.title}" class="text-gray">Title (2018)</strong>
+                                                <span class="ml-2">(</span>
+                                                <span th:text="${review.tv.getReleaseYear()}"></span>
+                                                <span>)</span>
+                                            </a>
+                                            <div class="ml-auto mr-2">Score:</div>
+                                            <div class="d-flex">
+                                                <!--<input class="rating rating-loading score p-0" th:value="${review.rating}" data-stars="5" data-min="0" data-max="5" data-size="xxxs" disabled=true data-show-clear="false" data-show-caption="false"/>-->
+                                                <span th:text="${review.rating}?:'no score'" class="mr-2">No score</span>
+                                            </div>
+                                        </div>
+                                        <p th:text="${review.review}">
+                                            Review
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- Server response modal -->
+<div class="modal fade" id="serverResponseModal" tabindex="-1" role="dialog" aria-labelledby="serverResponseModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div th:fragment="serverResponseModalContent" class="modal-content" id="serverResponseModalContent" style="color: black;">
+            <div class="modal-header">
+                <h5 class="modal-title" th:text="${title}?: 'Processing'"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" th:text="${body}?: 'Processing your request...'"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Report confirmation modal -->
+<div class="modal fade" id="reportConfirmModal" tabindex="-1" role="dialog" aria-labelledby="reportConfirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="deleteConfirmModalContent" style="color: black;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="report-modal-title">Report</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <input name="reportType" id="reportType" type="hidden"/>
+            <form th:action="@{/}" method="post" id="report-form">
+                <div class="modal-body" id="report-modal-body">
+                    <h6>Do you want to report?</h6>
+                    <span class="mt-2">Reason:</span>
+                    <input name="id" id="reportId" type="hidden"/>
+                    <textarea name="reason" class="form-control" id="reason" rows="3" style="resize: none;"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button id="confirm-report" type="button" class="btn btn-danger" data-dismiss="modal">Report</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- footer -->
+<div th:replace="fragments/footer">Navbar</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="../../js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<script src="../../js/popper.min.js" th:src="@{/js/popper.min.js}"></script>
+<script src="../../js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<script src="../../js/star-rating.js" th:src="@{/js/star-rating.js}"></script>
+<script th:inline="javascript">
+    $( document ).ajaxComplete(function( event, xhr, settings ) {
+        $(".rating").rating({});
+    });
+
+    $(document).on('click', '.report-critic', function(){
+        var id =  $(this).data("id");
+        $('#reportId').val(id);
+        $('#report-modal-title').text('Report User');
+        $("#reportConfirmModal").modal('show');
+    });
+
+    $("#confirm-report").on("click", function () {
+        console.log($('#reportId').val());
+        $.ajax({
+            method: "POST",
+            url: '/reportCritic',
+            data: $('#report-form').serialize(),
+            success: function(data){
+                $('#serverResponseModalContent').replaceWith(data);
+                $("#serverResponseModal").modal('show');
+                $('#reason').val('');
+            }
+        });
+    });
+
+</script>
+
+</body>
+</html>

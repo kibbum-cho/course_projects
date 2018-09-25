@@ -1,0 +1,520 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta http-equiv="Content-Type" content="text/html"/>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="../../css/my_style.css" th:href="@{/css/my_style.css}"/>
+    <link rel="stylesheet" href="../../fonts/ionicons.min.css" th:href="@{/fonts/ionicons.min.css}"/>
+    <link rel="stylesheet" href="../../css/Footer-Clean.css" th:href="@{/css/Footer-Clean.css}"/>
+    <link rel="stylesheet" href="../../css/star-rating.css" th:href="@{/css/star-rating.css}"/>
+    <link rel="stylesheet" href="../../css/ratings.css" th:href="@{/css/ratings.css}"/>
+
+    <title>Profile</title>
+</head>
+
+
+<body>
+<!-- Navbar -->
+<div sec:authorize="isAnonymous()"><div th:replace="fragments/navbar">>Navbar</div></div>
+<div sec:authorize="hasRole('ROLE_USER')"><div th:replace="fragments/user_navbar">>Navbar</div></div>
+<div sec:authorize="hasRole('ROLE_ADMIN')"><div th:replace="fragments/admin_navbar">>Navbar</div></div>
+
+
+<!-- Profile body -->
+<div class="container">
+    <div class="row">
+        <!-- Side bar -->
+        <div class="col-sm-12 col-md-3 col-lg-4 mb-3">
+            <div class="jumbotron-side">
+                <h5><strong>REPORTS</strong></h5>
+
+                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link active" id="all" data-toggle="pill" href="#v-pills-all" role="tab" aria-controls="v-pills-all" aria-selected="true">
+                        Users
+                    </a>
+                    <a class="nav-link category-option" id="movies" data-toggle="pill" href="#v-pills-movies" role="tab" aria-controls="v-pills-movies" aria-selected="false">
+                        Reviews
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Report content colmn -->
+        <div class="col">
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="v-pills-all" role="tabpanel" aria-labelledby="v-pills-all-tab">
+                    <!-- Users -->
+                    <div class="details-jumbotron pb-3 mb-3">
+                        <nav>
+                            <div class="nav nav-tabs" role="tablist">
+                                <a class="nav-item nav-link active" id="nav-critic-tab" data-toggle="tab" href="#nav-critic" role="tab" aria-controls="nav-critic" aria-selected="true">Reported Critics</a>
+                                <a class="nav-item nav-link" id="nav-user-tab" data-toggle="tab" href="#nav-user" role="tab" aria-controls="nav-user" aria-selected="false">Reported Users</a>
+                            </div>
+                        </nav>
+
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="nav-critic" role="tabpanel" aria-labelledby="nav-critic-tab">
+                                <h6 class="border-bottom border-gray pb-2 mt-4">REPORTED CRITICS</h6>
+                                <div id="critics">
+                                    <div th:fragment="critics" th:each="critic,iterStat : ${reportedCritics}" class="media pt-3 border-bottom pb-3">
+                                        <div class="review-thumbnail-container">
+                                            <a th:href="@{/criticHome(criticId=${critic.criticId})}">
+                                                <img th:src="@{(${critic.critic.photo}?: '/img/default.gif')}" alt="..." class="review-img-thumbnail"/>
+                                            </a>
+                                        </div>
+                                        <div class="media-body pb-3 mb-0 small lh-125 ">
+                                            <div class="d-flex pr-2">
+                                                <strong class="text-gray">Reason:</strong>
+                                                <a href="#" th:attr="data-id=${critic.criticId}" class="dismiss-critic ml-auto mr-3 ion-android-checkbox" style="color: #5CD1E5; font-size:1rem;"></a>
+                                                <a href="#" th:attr="data-id=${critic.criticId}" class="delete-critic ion-minus-circled" style="color: red; font-size:1rem;"></a>
+                                            </div>
+                                            <p th:text="${critic.reason}">
+                                                Reason
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="tab-pane fade" id="nav-user" role="tabpanel" aria-labelledby="nav-review-tv-tab">
+                                <h6 class="border-bottom border-gray pb-2 mt-4">REPORTED USERS</h6>
+                                <div id="users">
+                                    <div th:fragment="users" th:each="user,iterStat : ${reportedUsers}" class="media pt-3 border-bottom pb-3">
+                                        <div class="review-thumbnail-container">
+                                            <a th:href="@{/userInformation(userName=${user.user.username})}">
+                                                <img th:src="@{(${user.user.photo}?: '/img/default.gif')}" alt="..." class="review-img-thumbnail"/>
+                                            </a>
+                                        </div>
+                                        <div class="media-body pb-3 mb-0 small lh-125 ">
+                                            <div class="d-flex pr-2">
+                                                <strong class="text-gray">Reason:</strong>
+                                                <a href="#" th:attr="data-id=${user.userId}" class="dismiss-user ml-auto mr-3 ion-android-checkbox" style="color: #5CD1E5; font-size:1rem;"></a>
+                                                <a href="#" th:attr="data-id=${user.userId}" class="delete-user ion-minus-circled" style="color: red; font-size:1rem;"></a>
+                                            </div>
+                                            <p th:text="${user.reason}">
+                                                Reason
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="v-pills-movies" role="tabpanel" aria-labelledby="v-pills-movies-tab">
+                    <!-- Reviews -->
+                    <div class="details-jumbotron pb-3 mb-3">
+                        <nav>
+                            <div class="nav nav-tabs" role="tablist">
+                                <a class="nav-item nav-link active" id="nav-review-movie-tab" data-toggle="tab" href="#nav-review-movie" role="tab" aria-controls="nav-review-movie" aria-selected="true">Movie Reviews</a>
+                                <a class="nav-item nav-link" id="nav-review-tv-tab" data-toggle="tab" href="#nav-review-tv" role="tab" aria-controls="nav-review-tv" aria-selected="false">TV Reviews</a>
+                            </div>
+                        </nav>
+
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="nav-review-movie" role="tabpanel" aria-labelledby="nav-review-movie-tab">
+                                <h6 class="border-bottom border-gray pb-2 mt-3">REPORTED CRITIC REVIEWS</h6>
+                                <div id="movieCriticReviews">
+                                    <div th:fragment="movieCriticReviews" th:each="review,iterStat : ${movieCriticReviews}" class="media pt-3 border-bottom pb-3">
+                                        <div class="review-thumbnail-container">
+                                            <a th:href="@{/criticHome(criticId=${review.movieReviewCritic.criticId})}">
+                                                <img th:src="@{(${review.movieReviewCritic.critic.photo}?: '/img/default.gif')}" alt="..." class="review-img-thumbnail"/>
+                                            </a>
+                                        </div>
+                                        <div class="media-body pb-3 mb-0 small lh-125 ">
+                                            <div class="d-flex pr-2">
+                                                <strong class="text-gray">Reason:</strong>
+                                                <a href="#" th:attr="data-id=${review.reviewId}" class="dismiss-movie-critic-review ml-auto mr-3 ion-android-checkbox" style="color: #5CD1E5; font-size:1rem;"></a>
+                                                <a href="#" th:attr="data-id=${review.reviewId}" class="delete-movie-critic-review ion-minus-circled" style="color: red; font-size:1rem;"></a>
+                                            </div>
+                                            <p th:text="${review.reason}">
+                                                Reason
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h6 class="border-bottom border-gray pb-2 mt-4">REPORTED USER REVIEWS</h6>
+                                <div id="movieUserReviews">
+                                    <div th:fragment="movieUserReviews" th:each="review,iterStat : ${movieUserReviews}" class="media pt-3 border-bottom pb-3">
+                                        <div class="review-thumbnail-container">
+                                            <a th:href="@{/userInformation(userName=${review.movieReviewUser.user.username})}">
+                                                <img th:src="@{(${review.movieReviewUser.user.photo}?: '/img/default.gif')}" alt="..." class="review-img-thumbnail"/>
+                                            </a>
+                                        </div>
+                                        <div class="media-body pb-3 mb-0 small lh-125 ">
+                                            <div class="d-flex pr-2">
+                                                <strong class="text-gray">Reason:</strong>
+                                                <a href="#" th:attr="data-id=${review.reviewId}" class="dismiss-movie-user-review ml-auto mr-3 ion-android-checkbox" style="color: #5CD1E5; font-size:1rem;"></a>
+                                                <a href="#" th:attr="data-id=${review.reviewId}" class="delete-movie-user-review ion-minus-circled" style="color: red; font-size:1rem;"></a>
+                                            </div>
+                                            <p th:text="${review.reason}">
+                                                Reason
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="tab-pane fade" id="nav-review-tv" role="tabpanel" aria-labelledby="nav-review-tv-tab">
+                                <h6 class="border-bottom border-gray pb-2 mt-3">REPORTED CRITIC REVIEWS</h6>
+                                <div id="tvCriticReviews">
+                                    <div th:fragment="tvCriticReviews" th:each="review,iterStat : ${tvCriticReviews}" class="media pt-3 border-bottom pb-3">
+                                        <div class="review-thumbnail-container">
+                                            <a th:href="@{/criticHome(criticId=${review.tvReviewCritic.criticId})}">
+                                                <img th:src="@{(${review.tvReviewCritic.critic.photo}?: '/img/default.gif')}" alt="..." class="review-img-thumbnail"/>
+                                            </a>
+                                        </div>
+                                        <div class="media-body pb-3 mb-0 small lh-125 ">
+                                            <div class="d-flex pr-2">
+                                                <strong class="text-gray">Reason:</strong>
+                                                <a href="#" th:attr="data-id=${review.reviewId}" class="dismiss-tv-critic-review ml-auto mr-3 ion-android-checkbox" style="color: #5CD1E5; font-size:1rem;"></a>
+                                                <a href="#" th:attr="data-id=${review.reviewId}" class="delete-tv-critic-review ion-minus-circled" style="color: red; font-size:1rem;"></a>
+                                            </div>
+                                            <p th:text="${review.reason}">
+                                                Reason
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h6 class="border-bottom border-gray pb-2 mt-4">REPORTED USER REVIEWS</h6>
+                                <div id="tvUserReviews">
+                                    <div th:fragment="tvUserReviews" th:each="review,iterStat : ${tvUserReviews}" class="media pt-3 border-bottom pb-3">
+                                        <div class="review-thumbnail-container">
+                                            <a th:href="@{/userInformation(userName=${review.tvReviewUser.user.username})}">
+                                                <img th:src="@{(${review.tvReviewUser.user.photo}?: '/img/default.gif')}" alt="..." class="review-img-thumbnail"/>
+                                            </a>
+                                        </div>
+                                        <div class="media-body pb-3 mb-0 small lh-125 ">
+                                            <div class="d-flex pr-2">
+                                                <strong class="text-gray">Reason:</strong>
+                                                <a href="#" th:attr="data-id=${review.reviewId}" class="dismiss-tv-user-review ml-auto mr-3 ion-android-checkbox" style="color: #5CD1E5; font-size:1rem;"></a>
+                                                <a href="#" th:attr="data-id=${review.reviewId}" class="delete-tv-user-review ion-minus-circled" style="color: red; font-size:1rem;"></a>
+                                            </div>
+                                            <p th:text="${review.reason}">
+                                                Reason
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Dismiss confirmation modal -->
+<div class="modal fade" id="dismissConfirmModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="dismissConfirmModalContent" style="color: black;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="dismiss-modal-title">Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="dismiss-modal-body">Do you want to delete?</div>
+            <div class="modal-footer">
+                <input name="dismissType" id="dismissType" type="hidden"/>
+                <form th:action="@{/}" method="post" id="dismiss-form">
+                    <input name="id" id="dismissId" type="hidden"/>
+                    <button id="confirm-dismiss" type="button" class="btn btn-primary" data-dismiss="modal">Dismiss</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete confirmation modal -->
+<div class="modal fade" id="deleteConfirmModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="deleteConfirmModalContent" style="color: black;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="delete-modal-title">Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="delete-modal-body">Do you want to delete?</div>
+            <div class="modal-footer">
+                <input name="listType" id="listType" type="hidden"/>
+                <form th:action="@{/}" method="post" id="delete-form">
+                    <input name="id" id="deleteId" type="hidden"/>
+                    <button id="confirm-delete" type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Server response modal -->
+<div class="modal fade" id="serverResponseModal" tabindex="-1" role="dialog" aria-labelledby="serverResponseModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div th:fragment="serverResponseModalContent" class="modal-content" id="serverResponseModalContent" style="color: black;">
+            <div class="modal-header">
+                <h5 class="modal-title" th:text="${title}?: 'Processing'"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" th:text="${body}?: 'Processing your request...'"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- footer -->
+<div th:replace="fragments/footer">>Navbar</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="../../js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<script src="../../js/popper.min.js" th:src="@{/js/popper.min.js}"></script>
+<script src="../../js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<script src="../../js/star-rating.js" th:src="@{/js/star-rating.js}"></script>
+
+<script th:inline="javascript">
+    $(document).on('click', '.delete-critic', function(){
+        var id =  $(this).data("id");
+        $('#listType').val('delete-critic');
+        $('#deleteId').val(id);
+        $('#delete-modal-title').text('Delete Critic');
+        $('#delete-modal-body').text('Do you want to delete this Critic?');
+        $("#deleteConfirmModal").modal('show');
+    });
+
+    $(document).on('click', '.delete-user', function(){
+        var id =  $(this).data("id");
+        $('#listType').val('delete-user');
+        $('#deleteId').val(id);
+        $('#delete-modal-title').text('Movie Delete');
+        $('#delete-modal-body').text('Do you want to delete this user?');
+        $("#deleteConfirmModal").modal('show');
+    });
+
+    $(document).on('click', '.delete-movie-critic-review', function(){
+        var id =  $(this).data("id");
+        $('#listType').val('delete-movie-critic-review');
+        $('#deleteId').val(id);
+        $('#delete-modal-title').text('Movie Review Delete');
+        $('#delete-modal-body').text('Do you want to delete this review?');
+        $("#deleteConfirmModal").modal('show');
+    });
+
+    $(document).on('click', '.delete-movie-user-review', function(){
+        var id =  $(this).data("id");
+        $('#listType').val('delete-movie-user-review');
+        $('#deleteId').val(id);
+        $('#delete-modal-title').text('Movie Review Delete');
+        $('#delete-modal-body').text('Do you want to delete this review?');
+        $("#deleteConfirmModal").modal('show');
+    });
+
+    $(document).on('click', '.delete-tv-critic-review', function(){
+        var id =  $(this).data("id");
+        $('#listType').val('delete-tv-critic-review');
+        $('#deleteId').val(id);
+        $('#delete-modal-title').text('Tv Review Delete');
+        $('#delete-modal-body').text('Do you want to delete this review?');
+        $("#deleteConfirmModal").modal('show');
+    });
+
+    $(document).on('click', '.delete-tv-user-review', function(){
+        var id =  $(this).data("id");
+        $('#listType').val('delete-tv-user-review');
+        $('#deleteId').val(id);
+        $('#delete-modal-title').text('Tv Review Delete');
+        $('#delete-modal-body').text('Do you want to delete this review?');
+        $("#deleteConfirmModal").modal('show');
+    });
+
+
+    $("#confirm-delete").on("click", function () {
+        var url = '';
+        var list = '';
+        var list_type = $('#listType').val();
+        if(list_type == 'delete-critic'){
+            url = '/deleteCritic';
+            list = '/reportedCritic';
+        } else if(list_type == 'delete-user'){
+            url = '/deleteUser';
+            list = '/reportedUser';
+        } else if(list_type == 'delete-movie-critic-review'){
+            url = '/deleteMovieCriticReview';
+            list = '/reportedMovieCriticReview';
+        } else if(list_type == 'delete-movie-user-review'){
+            url = '/deleteMovieUserReview';
+            list = '/reportedMovieUserReview';
+        } else if(list_type == 'delete-tv-critic-review'){
+            url = '/deleteTvCriticReview';
+            list = '/reportedTvCriticReview';
+        } else if(list_type == 'delete-tv-user-review'){
+            url = '/deleteTvUserReview';
+            list = '/reportedTvUserReview';
+        }
+        console.log($('#deleteId').val());
+        $.ajax({
+            method: "POST",
+            url: url,
+            data: $('#delete-form').serialize(),
+            success: function(data){
+                $('#serverResponseModalContent').replaceWith(data);
+                $("#serverResponseModal").modal('show');
+                if (list_type == 'delete-critic'){
+                    $("#critics").load(list);
+                } else if (list_type == 'delete-user'){
+                    $("#users").load(list);
+                } else if (list_type == 'delete-movie-critic-review'){
+                    $("#movieCriticReviews").load(list);
+                } else if (list_type == 'delete-movie-user-review'){
+                    $("#movieUserReviews").load(list);
+                } else if (list_type == 'delete-tv-critic-review'){
+                    $("#tvCriticReviews").load(list);
+                } else if (list_type == 'delete-tv-user-review'){
+                    $("#tvUserReviews").load(list);
+                }
+            }
+        });
+    });
+
+
+
+
+
+    $(document).on('click', '.dismiss-critic', function(){
+        var id =  $(this).data("id");
+        $('#dismissType').val('dismiss-critic');
+        $('#dismissId').val(id);
+        $('#dismiss-modal-title').text('Dismiss Critic');
+        $('#dismiss-modal-body').text('Do you want to dismiss this Critic?');
+        $("#dismissConfirmModal").modal('show');
+    });
+
+    $(document).on('click', '.dismiss-user', function(){
+        var id =  $(this).data("id");
+        $('#dismissType').val('dismiss-user');
+        $('#dismissId').val(id);
+        $('#dismiss-modal-title').text('Dismiss User');
+        $('#dismiss-modal-body').text('Do you want to dismiss this user?');
+        $("#dismissConfirmModal").modal('show');
+    });
+
+    $(document).on('click', '.dismiss-movie-critic-review', function(){
+        var id =  $(this).data("id");
+        $('#dismissType').val('dismiss-movie-critic-review');
+        $('#dismissId').val(id);
+        $('#dismiss-modal-title').text('Movie Review Dismiss');
+        $('#dismiss-modal-body').text('Do you want to dismiss this review?');
+        $("#dismissConfirmModal").modal('show');
+    });
+
+    $(document).on('click', '.dismiss-movie-user-review', function(){
+        var id =  $(this).data("id");
+        $('#dismissType').val('dismiss-movie-user-review');
+        $('#dismissId').val(id);
+        $('#dismiss-modal-title').text('Movie Review Dismiss');
+        $('#dismiss-modal-body').text('Do you want to dismiss this review?');
+        $("#dismissConfirmModal").modal('show');
+    });
+
+    $(document).on('click', '.dismiss-tv-critic-review', function(){
+        var id =  $(this).data("id");
+        $('#dismissType').val('delete-tv-critic-review');
+        $('#dismissId').val(id);
+        $('#dismiss-modal-title').text('Tv Review Dismiss');
+        $('#dismiss-modal-body').text('Do you want to deldismissete this review?');
+        $("#dismissConfirmModal").modal('show');
+    });
+
+    $(document).on('click', '.dismiss-tv-user-review', function(){
+        var id =  $(this).data("id");
+        $('#dismissType').val('dismiss-tv-user-review');
+        $('#dismissId').val(id);
+        $('#dismiss-modal-title').text('Tv Review Dismiss');
+        $('#dismiss-modal-body').text('Do you want to dismiss this review?');
+        $("#dismissConfirmModal").modal('show');
+    });
+
+
+    $("#confirm-dismiss").on("click", function () {
+        var url = '';
+        var list = '';
+        var list_type = $('#dismissType').val();
+        if(list_type == 'dismiss-critic'){
+            url = '/dismissCritic';
+            list = '/reportedCritic';
+        } else if(list_type == 'dismiss-user'){
+            url = '/dismissUser';
+            list = '/reportedUser';
+        } else if(list_type == 'dismiss-movie-critic-review'){
+            url = '/dismissMovieCriticReview';
+            list = '/reportedMovieCriticReview';
+        } else if(list_type == 'dismiss-movie-user-review'){
+            url = '/dismissMovieUserReview';
+            list = '/reportedMovieUserReview';
+        } else if(list_type == 'dismiss-tv-critic-review'){
+            url = '/dismissTvCriticReview';
+            list = '/reportedTvCriticReview';
+        } else if(list_type == 'dismiss-tv-user-review'){
+            url = '/dismissTvUserReview';
+            list = '/reportedTvUserReview';
+        }
+        console.log($('#dismissId').val());
+        $.ajax({
+            method: "POST",
+            url: url,
+            data: $('#dismiss-form').serialize(),
+            success: function(data){
+                $('#serverResponseModalContent').replaceWith(data);
+                $("#serverResponseModal").modal('show');
+                if (list_type == 'dismiss-critic'){
+                    $("#critics").load(list);
+                } else if (list_type == 'dismiss-user'){
+                    $("#users").load(list);
+                } else if (list_type == 'dismiss-movie-critic-review'){
+                    $("#movieCriticReviews").load(list);
+                } else if (list_type == 'dismiss-movie-user-review'){
+                    $("#movieUserReviews").load(list);
+                } else if (list_type == 'dismiss-tv-critic-review'){
+                    $("#tvCriticReviews").load(list);
+                } else if (list_type == 'dismiss-tv-user-review'){
+                    $("#tvUserReviews").load(list);
+                }
+            }
+        });
+    });
+
+
+    $( document ).ajaxComplete(function( event, xhr, settings ) {
+        $(".rating.score").rating({});
+    });
+
+</script>
+
+</body>
+</html>

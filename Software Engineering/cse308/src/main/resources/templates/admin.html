@@ -1,0 +1,419 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta http-equiv="Content-Type" content="text/html"/>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="../../css/my_style.css" th:href="@{/css/my_style.css}"/>
+    <link rel="stylesheet" href="../../fonts/ionicons.min.css" th:href="@{/fonts/ionicons.min.css}"/>
+    <link rel="stylesheet" href="../../css/Footer-Clean.css" th:href="@{/css/Footer-Clean.css}"/>
+
+    <title>Admin Page</title>
+</head>
+
+
+<body>
+    <!-- Navbar -->
+    <div sec:authorize="hasRole('ROLE_ADMIN')"><div th:replace="fragments/admin_navbar">>Navbar</div></div>
+
+    <!-- account settings -->
+    <div class="container">
+        <div class="d-flex border-top-bottom mt-4">
+            <strong>ADMIN SETTINGS</strong>
+        </div>
+        <div class="details-jumbotron mt-4 mb-4">
+            <div class="admin-settings-block">
+                <strong class="mr-2">Suspend User</strong>
+                <a href="#" data-toggle="modal" data-target="#suspendSetting">Edit</a>
+                <p>Enter Username and Date</p>
+            </div>
+            <div class="admin-settings-block">
+                <strong class="mr-2">Ban User</strong>
+                <a href="#" data-toggle="modal" data-target="#banSetting">Edit</a>
+                <p>Enter Username</p>
+            </div>
+            <div class="admin-settings-block">
+                <strong class="mr-2">Delete User</strong>
+                <a href="#" data-toggle="modal" data-target="#deleteUserSetting">Edit</a>
+                <p>Enter Username</p>
+            </div>
+            <div class="admin-settings-block">
+                <strong class="mr-2">Delete Movie</strong>
+                <a href="#" data-toggle="modal" data-target="#deleteMovieSetting">Edit</a>
+                <p>Delete Movie.</p>
+            </div>
+            <div class="admin-settings-block">
+                <strong class="mr-2">Submit Movie</strong>
+                <a href="#" data-toggle="modal" data-target="#movieSetting">Edit</a>
+                <p>Submit Movie.</p>
+            </div>
+            <div class="admin-settings-block">
+                <strong class="mr-2">Submit TV Show</strong>
+                <a href="#" data-toggle="modal" data-target="#tvSetting">Submit TV show</a>
+                <p>Submit TV Show.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Suspension Setting Modal -->
+    <div class="modal fade" id="suspendSetting" tabindex="-1" role="dialog" aria-labelledby="suspendModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div th:fragment="suspendSetting" id="suspendSettingContent" class="modal-content dark-modal">
+                <div class="modal-header">
+                    <h5 class="modal-title">Suspend Setting</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form th:action="@{/suspendUser}" method="post" id="suspendForm">
+                    <div class="modal-body">
+                        <span class="response" th:text="${response}"></span>
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" name="suspendUsername" class="form-control" id="suspendUsername" th:value="${user.username}?:''"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" name="date" class="form-control" id="date" th:value="${user.suspendDate}?:''"/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="suspendButton" type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ban Setting Modal -->
+    <div class="modal fade" id="banSetting" tabindex="-1" role="dialog" aria-labelledby="banModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div th:fragment="banSetting" id="banSettingContent" class="modal-content dark-modal">
+                <div class="modal-header">
+                    <h5 class="modal-title">Ban Setting</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form th:action="@{/banUser}" method="post" id="banForm">
+                    <div class="modal-body">
+                        <span class="response" th:text="${response}"></span>
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" name="banUsername" class="form-control" id="banUsername" th:value="${user.username}?:''"/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="banButton" type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Setting Modal -->
+    <div class="modal fade" id="deleteUserSetting" tabindex="-1" role="dialog" aria-labelledby="deleteUserModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div th:fragment="deleteUserSetting" id="deleteUserSettingContent" class="modal-content dark-modal">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete User Setting</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form th:action="@{/deleteUser}" method="post" id="deleteForm">
+                    <div class="modal-body">
+                        <span class="response" th:text="${response}"></span>
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" name="deleteUser" class="form-control" id="deleteUser" th:value="${user.username}?:''"/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="deleteUserButton" type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Setting Modal -->
+    <div class="modal fade" id="deleteMovieSetting" tabindex="-1" role="dialog" aria-labelledby="deleteMovieModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div th:fragment="deleteMovieSetting" id="deleteMovieSettingContent" class="modal-content dark-modal">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete Movie Setting</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form th:action="@{/deleteMovie}" method="post" id="deleteMovieForm">
+                    <div class="modal-body">
+                        <span class="response" th:text="${response}"></span>
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" name="deleteMovie" class="form-control" id="deleteMovie" th:value="${movie.title}?:''"/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="deleteMovieButton" type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="movieSetting" tabindex="-1" role="dialog" aria-labelledby="movieModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div th:fragment="movieSetting" id="movieSettingContent" class="modal-content dark-modal">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Movie Submission</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form th:action="@{/submitMovie}" method="post" id="movieForm">
+                    <div class="modal-body">
+                        <span class="response" th:text="${response}"></span>
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" name="movieTitle" class="form-control" id="movieTitle" th:value="${movie.title}?:''"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Director</label>
+                            <input type="text" name="movieDirector" class="form-control" id="movieDirector" th:value="${movie.director}?:''"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Average Rating</label>
+                            <input type="text" name="movieRatingAvg" class="form-control" id="movieRatingAvg" th:value="${movie.ratingAvg}?:''"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Rating Count</label>
+                            <input type="text" name="movieRatingCount" class="form-control" id="movieRatingCount" th:value="${movie.ratingCount}?:''"/>
+                        </div>
+                        <div class="form-group">
+                            <label>MPAA Rating</label>
+                            <input type="text" name="mpaaRating" class="form-control" id="mpaaRating" th:value="${movie.mpaaRating}?:''"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Box Office Revnue</label>
+                            <input type="text" name="movieRevenue" class="form-control" id="movieRevenue" th:value="${movie.revenue}?:''"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Release Date</label>
+                            <input type="text" name="movieReleaseDate" class="form-control" id="movieReleaseDate" th:value="${movie.releaseDate}?:''"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Poster</label>
+                            <input type="text" name="moviePoster" class="form-control" id="moviePoster" th:value="${movie.poster}?:''"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Trailer</label>
+                            <input type="text" name="movieTrailer" class="form-control" id="movieTrailer" th:value="${movie.trailer}?:''"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Trailer Thumbnail</label>
+                            <input type="text" name="movieRuntime" class="form-control" id="movieRuntime" th:value="${movie.runtime}?:''"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Writers</label>
+                            <input type="text" name="movieWriters" class="form-control" id="movieWriters" th:value="${movie.writers}?:''"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Genre</label>
+                            <input type="text" name="movieGenre" class="form-control" id="movieGenre" th:value="${movie.genre}?:''"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Actors</label>
+                            <input type="text" name="movieActors" class="form-control" id="movieActors" th:value="${movie.actors}?:''"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Overview</label>
+                            <textarea class="form-control" name="movieOverview" id="movieOverview" rows="5" style="resize:none;" th:text="${movie.overview}"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="movieSubButton" type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="tvSetting" tabindex="-1" role="dialog" aria-labelledby="tvModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div th:fragment="tvSetting" id="tvSettingContent" class="modal-content dark-modal">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">TV Submission</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form th:action="@{/submitTV}" method="post" id="tvForm">
+                    <div class="modal-body">
+                        <span class="response" th:text="${response}"></span>
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" name="tvTitle" class="form-control" id="tvTitle" th:value="${tv.title}?:''"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Premier Date</label>
+                            <input type="text" name="tvPremierDate" class="form-control" id="tvPremierDate" th:value="${tv.premierDate}?:''"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Average Rating</label>
+                            <input type="text" name="tvPoster" class="form-control" id="tvPoster" th:value="${tv.posting}?:''"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Rating Count</label>
+                            <input type="text" name="tvGenre" class="form-control" id="tvGenre" th:value="${tv.genre}?:''"/>
+                        </div>
+                        <div class="form-group">
+                            <label>MPAA Rating</label>
+                            <input type="text" name="tvCreators" class="form-control" id="tvCreators" th:value="${tv.creators}?:''"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Box Office Revnue</label>
+                            <input type="text" name="tvScreenshots" class="form-control" id="tvScreenshots" th:value="${tv.tvScreenshots}?:''"/>
+                        </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="tvSubButton" type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer -->
+    <div th:replace="fragments/footer">Footer</div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="../../js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <script src="../../js/popper.min.js" th:src="@{/js/popper.min.js}"></script>
+    <script src="../../js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+
+    <script th:inline="javascript">
+        $(document).on('click', '.movie-review-delete', function(){
+            var id =  $(this).data("id");
+            $('#listType').val('movie-review');
+            $('#deleteId').val(id);
+            $('#delete-modal-title').text('Movie Review Delete');
+            $('#delete-modal-body').text('Do you want to delete this review?');
+            $("#deleteConfirmModal").modal('show');
+        });
+
+        $(document).on("click", "#suspendButton", function () {
+            $('.response').text('');
+            $.ajax({
+                method: "POST",
+                url: "/suspendUser",
+                data: $('#suspendForm').serialize(),
+                success: function(data){
+                    $('#supendSettingContent').replaceWith(data);
+                }
+            });
+        });
+
+        $(document).on("click", "#banButton", function () {
+            $('.response').text('');
+            $.ajax({
+                method: "POST",
+                url: "/banUser",
+                data: $('#banForm').serialize(),
+                success: function(data){
+                    $('#banSettingContent').replaceWith(data);
+                }
+            });
+        });
+
+        $(document).on("click", "#deleteUserButton", function () {
+            $('.response').text('');
+            $.ajax({
+                method: "POST",
+                url: "/deleteUser",
+                data: $('#deleteForm').serialize(),
+                success: function(data){
+                    $('#deleteUserSettingContent').replaceWith(data);
+                }
+            });
+        });
+
+        $(document).on("click", "#deleteMovieButton", function () {
+            $('.response').text('');
+            $.ajax({
+                method: "POST",
+                url: "/deleteMovie",
+                data: $('#deleteMovieForm').serialize(),
+                success: function(data){
+                    $('#deleteMovieSettingContent').replaceWith(data);
+                }
+            });
+        });
+
+        $(document).on("click", "#movieSubButton", function () {
+            $('.response').text('');
+            $.ajax({
+                method: "POST",
+                url: "/submitMovie",
+                data: $('#movieForm').serialize(),
+                success: function(data){
+                    $('#movieSettingContent').replaceWith(data);
+                }
+            });
+        });
+
+        $(document).on("click", "#tvSubmitButton", function () {
+            $.ajax({
+                method: "POST",
+                url: "/submitTV",
+                data: $('#tvForm').serialize(),
+                success: function(data){
+                    $('#tvSettingContent').replaceWith(data);
+                }
+            });
+        });
+
+
+        $(document).on("keypress", "form", function(e) {
+            if (e.which == 13) {
+                return false;
+            }
+        });
+
+        $(document).ready(function(){
+            $('.modal').on('hidden.bs.modal', function (e) {
+                $('.response').text('');
+            });
+        });
+
+        $('#deleteAccount').on('hidden.bs.modal', function (e) {
+            if($('#deleted').val() == "true"){
+                window.location.href = '/index';
+            }
+        });
+
+
+    </script>
+
+</body>
+</html>

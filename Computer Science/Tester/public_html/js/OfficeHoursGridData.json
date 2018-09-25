@@ -1,0 +1,91 @@
+
+{
+    "startHour":"9",
+    "endHour":"16",
+    "undergrad_tas":[
+        {
+            "name":"Wonje Kang",
+            "email":"wonje.kang@stonybrook.edu"
+        },
+        {
+            "name":"Wonyong Jeong",
+            "email":"wonyon.jeong@stonybrook.edu"
+        },
+        {
+            "name":"Yu Zhao",
+            "email":"yu.zhao@stonybrook.edu"
+        },
+        {
+            "name":"grad",
+            "email":"grad@grad.grad"
+        },
+        {
+            "name":"me",
+            "email":"me@meme.mem"
+        }
+    ],
+    "grad_tas":[
+    ],
+    "officeHours":[
+        {
+            "day":"MONDAY",
+            "time":"10_00am",
+            "name":"Wonje Kang"
+        },
+        {
+            "day":"MONDAY",
+            "time":"10_00am",
+            "name":"Wonyong Jeong"
+        },
+        {
+            "day":"MONDAY",
+            "time":"10_30am",
+            "name":"Wonje Kang"
+        },
+        {
+            "day":"MONDAY",
+            "time":"10_30am",
+            "name":"Wonyong Jeong"
+        },
+        {
+            "day":"MONDAY",
+            "time":"11_00am",
+            "name":"Wonje Kang"
+        },
+        {
+            "day":"MONDAY",
+            "time":"11_00am",
+            "name":"Wonyong Jeong"
+        },
+        {
+            "day":"MONDAY",
+            "time":"11_30am",
+            "name":"Wonje Kang"
+        },
+        {
+            "day":"MONDAY",
+            "time":"11_30am",
+            "name":"Wonyong Jeong"
+        },
+        {
+            "day":"TUESDAY",
+            "time":"11_30am",
+            "name":"Yu Zhao"
+        },
+        {
+            "day":"THURSDAY",
+            "time":"11_30am",
+            "name":"Yu Zhao"
+        },
+        {
+            "day":"WEDNESDAY",
+            "time":"2_30pm",
+            "name":"Yu Zhao"
+        },
+        {
+            "day":"WEDNESDAY",
+            "time":"3_00pm",
+            "name":"Yu Zhao"
+        }
+    ]
+}

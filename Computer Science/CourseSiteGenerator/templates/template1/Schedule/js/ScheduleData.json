@@ -1,0 +1,28 @@
+
+{
+    "startingMondayMonth":"5",
+    "startingMondayDay":"1",
+    "startingMondayYear":"2017",
+    "endingFridayMonth":"5",
+    "endingFridayDay":"27",
+    "endingFridayYear":"2017",
+    "holidays":[
+        {
+            "month":"5",
+            "day":"17",
+            "time":"12",
+            "title":"hello",
+            "topic":"world",
+            "link":"link",
+            "criteria":"criteria"
+        }
+    ],
+    "lectures":[
+    ],
+    "references":[
+    ],
+    "recitations":[
+    ],
+    "hws":[
+    ]
+}

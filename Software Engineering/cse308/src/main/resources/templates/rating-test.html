@@ -1,0 +1,82 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta http-equiv="Content-Type" content="text/html"/>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="../../css/my_style.css" th:href="@{/css/my_style.css}"/>
+    <link rel="stylesheet" href="../../fonts/ionicons.min.css" th:href="@{/fonts/ionicons.min.css}"/>
+    <link rel="stylesheet" href="../../css/Footer-Clean.css" th:href="@{/css/Footer-Clean.css}"/>
+    <link rel="stylesheet" href="../../css/star-rating.css" th:href="@{/css/star-rating.css}"/>
+    <link rel="stylesheet" href="../../css/ratings.css" th:href="@{/css/ratings.css}"/>
+
+    <title>Profile</title>
+</head>
+
+
+<body>
+<!-- Navbar -->
+<div sec:authorize="isAnonymous()"><div th:replace="fragments/navbar">Navbar</div></div>
+<div sec:authorize="hasRole('ROLE_USER')"><div th:replace="fragments/user_navbar">Navbar</div></div>
+<div sec:authorize="hasRole('ROLE_CRITIC')"><div th:replace="fragments/user_navbar">Navbar</div></div>
+<div sec:authorize="hasRole('ROLE_ADMIN')"><div th:replace="fragments/admin_navbar">Navbar</div></div>
+
+
+<!-- Profile body -->
+<div class="container">
+    <!-- Movie details -->
+    <div class="card detail-card flex-md-row mb-4 mt-4">
+        <div class="card-poster-container align-items-center">
+            <img class="card-detail-poster" alt="poster" src="img/poster1.jpg"/>
+        </div>
+        <div class="card-body d-flex flex-column align-items-start">
+            <h5 class="mb-0">
+            <a class="detail-title">Movie Title</a>
+            </h5>
+            <div class="mb-1 text-muted">2018</div>
+            <div class="row w-100 ratings">
+                <div class="d-flex w-100">
+                    <div class="p-2">Flex item</div>
+                    <div class="p-2">Flex item</div>
+                    <div class="ml-auto p-2">Flex item</div>
+                    <div class="p-2">Flex item</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input id="input-1" class="rating rating-loading" value="4.3" data-min="0" data-max="5" data-step="0.5" data-size="xxs"/>
+
+    <input id="input-21c" class="rating rating-loading" value="0.7" data-min="0" data-max="5" data-step="0.5" data-size="xs"/>
+
+</div>
+
+
+<!-- footer -->
+<div th:replace="fragments/footer">>Navbar</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="../../js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<script src="../../js/popper.min.js" th:src="@{/js/popper.min.js}"></script>
+<script src="../../js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<script src="../../js/star-rating.js" th:src="@{/js/star-rating.js}"></script>
+
+<script>
+    $(window).bind("load", function() {
+        // jQuery methods go here...
+        $("#input-21c").rating({
+            min: 0, max: 8, step: 0.1, size: "xl", stars: "1"
+        });
+    });
+</script>
+
+</body>
+</html>

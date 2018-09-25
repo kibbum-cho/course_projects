@@ -1,0 +1,741 @@
+
+{
+    "course_details_json":{
+        "subject":"CSE",
+        "number":"219",
+        "semester":"Summer",
+        "year":"2018",
+        "title":"Computer Science",
+        "instructor_name":"Mc",
+        "instructor_home":"homepage",
+        "export_dir":"C:\\Users\\KIBBUM\\Desktop\\homework4\\TAManagerTester\\public_html\\New folder",
+        "template_dir":"C:\\Users\\KIBBUM\\Desktop\\homework4\\CourseSiteGenerator\\templates\\template1",
+        "site_pages":[
+            {
+                "use":true,
+                "title":"Home",
+                "file_name":"index.html",
+                "script":"HomeBuilder.js"
+            },
+            {
+                "use":true,
+                "title":"Syllabus",
+                "file_name":"sysllabus.html",
+                "script":"SyllabusBuilder.js"
+            },
+            {
+                "use":true,
+                "title":"Schedule",
+                "file_name":"schedule.html",
+                "script":"ScheduleBuilder.js"
+            },
+            {
+                "use":true,
+                "title":"HWs",
+                "file_name":"hws.html",
+                "script":"HWsBuilder.js"
+            },
+            {
+                "use":true,
+                "title":"Projects",
+                "file_name":"projects.html",
+                "script":"ProjectsBuilder.js"
+            }
+        ],
+        "school_image_path":"file:./images/default.jpg",
+        "left_footer_path":"file:./images/default.jpg",
+        "right_footer_path":"file:./images/default.jpg",
+        "stylesheet":"sea_wolf.css"
+    },
+    "ta_data_json":{
+        "startHour":"9",
+        "endHour":"16",
+        "undergrad_tas":[
+            {
+                "name":"Aarin Chase",
+                "email":"aarin.chase@stonybrook.edu"
+            },
+            {
+                "name":"Ali Afzal",
+                "email":"ali.afzal@stonybrook.edu"
+            },
+            {
+                "name":"Anthony Roy",
+                "email":"anthony.roy@stonybrook.edu"
+            },
+            {
+                "name":"Bryan Robicheau",
+                "email":"bryan.robicheau@stonybrook.edu"
+            },
+            {
+                "name":"Calvin Cheng",
+                "email":"calvin.cheng@stonybrook.edu"
+            },
+            {
+                "name":"Chaeyoung Lee",
+                "email":"chaeyoung.lee@stonybrook.edu"
+            },
+            {
+                "name":"Hsiang-Ju Lai",
+                "email":"hsiang-ju.lai@stonybrook.edu"
+            },
+            {
+                "name":"James Hoffman",
+                "email":"james.a.hoffman@stonybrook.edu"
+            },
+            {
+                "name":"Jamie Kunzmann",
+                "email":"jamie.kunzmann@stonybrook.edu"
+            },
+            {
+                "name":"Jenny Li",
+                "email":"jenny.li@stonybrook.edu"
+            },
+            {
+                "name":"Jerrel Sogoni",
+                "email":"jerrel.sogoni@stonybrook.edu"
+            },
+            {
+                "name":"KI BBUM CHO",
+                "email":"kibbum.cho@stonybrook.edu"
+            },
+            {
+                "name":"Michael Mathew",
+                "email":"michael.mathew@stonybrook.edu"
+            },
+            {
+                "name":"Milto Ndrenika",
+                "email":"milto.ndrenika@stonybrook.edu"
+            },
+            {
+                "name":"Muhammad R Islam",
+                "email":"muhammad.r.islam@stonybrook.edu"
+            },
+            {
+                "name":"Robert Trujillo",
+                "email":"robert.trujillo@stonybrook.edu"
+            },
+            {
+                "name":"Serge Crane",
+                "email":"serge.crane@stonybrook.edu"
+            },
+            {
+                "name":"Wonje Kang",
+                "email":"wonje.kang@stonybrook.edu"
+            },
+            {
+                "name":"Wonyong Jeong",
+                "email":"wonyon.jeong@stonybrook.edu"
+            },
+            {
+                "name":"Yu Zhao",
+                "email":"yu.zhao@stonybrook.edu"
+            }
+        ],
+        "grad_tas":[
+            {
+                "name":"AAAAA",
+                "email":"TEST@TEST.EFE"
+            },
+            {
+                "name":"Billy Mays",
+                "email":"billy@stony.edu"
+            },
+            {
+                "name":"Jane Doe",
+                "email":"jane@stony.edu"
+            },
+            {
+                "name":"Joe Shmo",
+                "email":"joe@stony.edu"
+            },
+            {
+                "name":"Willie Mays",
+                "email":"willie@stony.edu"
+            },
+            {
+                "name":"Willie Mays Hayes",
+                "email":"willeMH@stony.edu"
+            }
+        ],
+        "officeHours":[
+            {
+                "day":"MONDAY",
+                "time":"9_00am",
+                "name":"Aarin Chase"
+            },
+            {
+                "day":"TUESDAY",
+                "time":"9_00am",
+                "name":"Aarin Chase"
+            },
+            {
+                "day":"WEDNESDAY",
+                "time":"9_00am",
+                "name":"Aarin Chase"
+            },
+            {
+                "day":"THURSDAY",
+                "time":"9_00am",
+                "name":"Aarin Chase"
+            },
+            {
+                "day":"FRIDAY",
+                "time":"9_00am",
+                "name":"Aarin Chase"
+            },
+            {
+                "day":"MONDAY",
+                "time":"9_30am",
+                "name":"KI BBUM CHO"
+            },
+            {
+                "day":"MONDAY",
+                "time":"9_30am",
+                "name":"AAAAA"
+            },
+            {
+                "day":"TUESDAY",
+                "time":"9_30am",
+                "name":"KI BBUM CHO"
+            },
+            {
+                "day":"TUESDAY",
+                "time":"9_30am",
+                "name":"AAAAA"
+            },
+            {
+                "day":"WEDNESDAY",
+                "time":"9_30am",
+                "name":"KI BBUM CHO"
+            },
+            {
+                "day":"WEDNESDAY",
+                "time":"9_30am",
+                "name":"AAAAA"
+            },
+            {
+                "day":"THURSDAY",
+                "time":"9_30am",
+                "name":"KI BBUM CHO"
+            },
+            {
+                "day":"THURSDAY",
+                "time":"9_30am",
+                "name":"AAAAA"
+            },
+            {
+                "day":"FRIDAY",
+                "time":"9_30am",
+                "name":"KI BBUM CHO"
+            },
+            {
+                "day":"FRIDAY",
+                "time":"9_30am",
+                "name":"AAAAA"
+            },
+            {
+                "day":"MONDAY",
+                "time":"10_00am",
+                "name":"Wonje Kang"
+            },
+            {
+                "day":"MONDAY",
+                "time":"10_00am",
+                "name":"Wonyong Jeong"
+            },
+            {
+                "day":"WEDNESDAY",
+                "time":"10_00am",
+                "name":"Calvin Cheng"
+            },
+            {
+                "day":"WEDNESDAY",
+                "time":"10_00am",
+                "name":"Jenny Li"
+            },
+            {
+                "day":"FRIDAY",
+                "time":"10_00am",
+                "name":"Jamie Kunzmann"
+            },
+            {
+                "day":"FRIDAY",
+                "time":"10_00am",
+                "name":"Serge Crane"
+            },
+            {
+                "day":"MONDAY",
+                "time":"10_30am",
+                "name":"Wonje Kang"
+            },
+            {
+                "day":"MONDAY",
+                "time":"10_30am",
+                "name":"Wonyong Jeong"
+            },
+            {
+                "day":"TUESDAY",
+                "time":"10_30am",
+                "name":"Jerrel Sogoni"
+            },
+            {
+                "day":"WEDNESDAY",
+                "time":"10_30am",
+                "name":"Calvin Cheng"
+            },
+            {
+                "day":"WEDNESDAY",
+                "time":"10_30am",
+                "name":"Jenny Li"
+            },
+            {
+                "day":"FRIDAY",
+                "time":"10_30am",
+                "name":"Jamie Kunzmann"
+            },
+            {
+                "day":"FRIDAY",
+                "time":"10_30am",
+                "name":"Serge Crane"
+            },
+            {
+                "day":"MONDAY",
+                "time":"11_00am",
+                "name":"Wonje Kang"
+            },
+            {
+                "day":"MONDAY",
+                "time":"11_00am",
+                "name":"Wonyong Jeong"
+            },
+            {
+                "day":"TUESDAY",
+                "time":"11_00am",
+                "name":"Jerrel Sogoni"
+            },
+            {
+                "day":"WEDNESDAY",
+                "time":"11_00am",
+                "name":"Calvin Cheng"
+            },
+            {
+                "day":"WEDNESDAY",
+                "time":"11_00am",
+                "name":"Jenny Li"
+            },
+            {
+                "day":"FRIDAY",
+                "time":"11_00am",
+                "name":"Jamie Kunzmann"
+            },
+            {
+                "day":"FRIDAY",
+                "time":"11_00am",
+                "name":"Serge Crane"
+            },
+            {
+                "day":"MONDAY",
+                "time":"11_30am",
+                "name":"Wonje Kang"
+            },
+            {
+                "day":"MONDAY",
+                "time":"11_30am",
+                "name":"Wonyong Jeong"
+            },
+            {
+                "day":"TUESDAY",
+                "time":"11_30am",
+                "name":"Robert Trujillo"
+            },
+            {
+                "day":"TUESDAY",
+                "time":"11_30am",
+                "name":"Yu Zhao"
+            },
+            {
+                "day":"WEDNESDAY",
+                "time":"11_30am",
+                "name":"Calvin Cheng"
+            },
+            {
+                "day":"THURSDAY",
+                "time":"11_30am",
+                "name":"Yu Zhao"
+            },
+            {
+                "day":"FRIDAY",
+                "time":"11_30am",
+                "name":"Jamie Kunzmann"
+            },
+            {
+                "day":"FRIDAY",
+                "time":"11_30am",
+                "name":"Serge Crane"
+            },
+            {
+                "day":"MONDAY",
+                "time":"12_00pm",
+                "name":"Calvin Cheng"
+            },
+            {
+                "day":"MONDAY",
+                "time":"12_00pm",
+                "name":"Jenny Li"
+            },
+            {
+                "day":"TUESDAY",
+                "time":"12_00pm",
+                "name":"Robert Trujillo"
+            },
+            {
+                "day":"TUESDAY",
+                "time":"12_00pm",
+                "name":"Jerrel Sogoni"
+            },
+            {
+                "day":"FRIDAY",
+                "time":"12_00pm",
+                "name":"Serge Crane"
+            },
+            {
+                "day":"MONDAY",
+                "time":"12_30pm",
+                "name":"Calvin Cheng"
+            },
+            {
+                "day":"MONDAY",
+                "time":"12_30pm",
+                "name":"Jenny Li"
+            },
+            {
+                "day":"TUESDAY",
+                "time":"12_30pm",
+                "name":"Robert Trujillo"
+            },
+            {
+                "day":"TUESDAY",
+                "time":"12_30pm",
+                "name":"Jerrel Sogoni"
+            },
+            {
+                "day":"MONDAY",
+                "time":"1_00pm",
+                "name":"Calvin Cheng"
+            },
+            {
+                "day":"MONDAY",
+                "time":"1_00pm",
+                "name":"Jenny Li"
+            },
+            {
+                "day":"MONDAY",
+                "time":"1_00pm",
+                "name":"Robert Trujillo"
+            },
+            {
+                "day":"TUESDAY",
+                "time":"1_00pm",
+                "name":"Jamie Kunzmann"
+            },
+            {
+                "day":"TUESDAY",
+                "time":"1_00pm",
+                "name":"Ali Afzal"
+            },
+            {
+                "day":"WEDNESDAY",
+                "time":"1_00pm",
+                "name":"Hsiang-Ju Lai"
+            },
+            {
+                "day":"THURSDAY",
+                "time":"1_00pm",
+                "name":"Jamie Kunzmann"
+            },
+            {
+                "day":"THURSDAY",
+                "time":"1_00pm",
+                "name":"Hsiang-Ju Lai"
+            },
+            {
+                "day":"MONDAY",
+                "time":"1_30pm",
+                "name":"Calvin Cheng"
+            },
+            {
+                "day":"MONDAY",
+                "time":"1_30pm",
+                "name":"Jenny Li"
+            },
+            {
+                "day":"MONDAY",
+                "time":"1_30pm",
+                "name":"Robert Trujillo"
+            },
+            {
+                "day":"TUESDAY",
+                "time":"1_30pm",
+                "name":"Jamie Kunzmann"
+            },
+            {
+                "day":"TUESDAY",
+                "time":"1_30pm",
+                "name":"Ali Afzal"
+            },
+            {
+                "day":"WEDNESDAY",
+                "time":"1_30pm",
+                "name":"Hsiang-Ju Lai"
+            },
+            {
+                "day":"THURSDAY",
+                "time":"1_30pm",
+                "name":"Jamie Kunzmann"
+            },
+            {
+                "day":"THURSDAY",
+                "time":"1_30pm",
+                "name":"Hsiang-Ju Lai"
+            },
+            {
+                "day":"MONDAY",
+                "time":"2_00pm",
+                "name":"Robert Trujillo"
+            },
+            {
+                "day":"MONDAY",
+                "time":"2_00pm",
+                "name":"Bryan Robicheau"
+            },
+            {
+                "day":"TUESDAY",
+                "time":"2_00pm",
+                "name":"Ali Afzal"
+            },
+            {
+                "day":"WEDNESDAY",
+                "time":"2_00pm",
+                "name":"Bryan Robicheau"
+            },
+            {
+                "day":"THURSDAY",
+                "time":"2_00pm",
+                "name":"Anthony Roy"
+            },
+            {
+                "day":"MONDAY",
+                "time":"2_30pm",
+                "name":"Bryan Robicheau"
+            },
+            {
+                "day":"MONDAY",
+                "time":"2_30pm",
+                "name":"James Hoffman"
+            },
+            {
+                "day":"TUESDAY",
+                "time":"2_30pm",
+                "name":"Anthony Roy"
+            },
+            {
+                "day":"WEDNESDAY",
+                "time":"2_30pm",
+                "name":"Bryan Robicheau"
+            },
+            {
+                "day":"WEDNESDAY",
+                "time":"2_30pm",
+                "name":"Yu Zhao"
+            },
+            {
+                "day":"THURSDAY",
+                "time":"2_30pm",
+                "name":"Anthony Roy"
+            },
+            {
+                "day":"FRIDAY",
+                "time":"2_30pm",
+                "name":"Milto Ndrenika"
+            },
+            {
+                "day":"MONDAY",
+                "time":"3_00pm",
+                "name":"Bryan Robicheau"
+            },
+            {
+                "day":"MONDAY",
+                "time":"3_00pm",
+                "name":"James Hoffman"
+            },
+            {
+                "day":"TUESDAY",
+                "time":"3_00pm",
+                "name":"Anthony Roy"
+            },
+            {
+                "day":"WEDNESDAY",
+                "time":"3_00pm",
+                "name":"Bryan Robicheau"
+            },
+            {
+                "day":"WEDNESDAY",
+                "time":"3_00pm",
+                "name":"Yu Zhao"
+            },
+            {
+                "day":"THURSDAY",
+                "time":"3_00pm",
+                "name":"Anthony Roy"
+            },
+            {
+                "day":"FRIDAY",
+                "time":"3_00pm",
+                "name":"Milto Ndrenika"
+            },
+            {
+                "day":"MONDAY",
+                "time":"3_30pm",
+                "name":"Bryan Robicheau"
+            },
+            {
+                "day":"MONDAY",
+                "time":"3_30pm",
+                "name":"James Hoffman"
+            },
+            {
+                "day":"TUESDAY",
+                "time":"3_30pm",
+                "name":"Anthony Roy"
+            },
+            {
+                "day":"WEDNESDAY",
+                "time":"3_30pm",
+                "name":"Bryan Robicheau"
+            },
+            {
+                "day":"THURSDAY",
+                "time":"3_30pm",
+                "name":"Anthony Roy"
+            },
+            {
+                "day":"FRIDAY",
+                "time":"3_30pm",
+                "name":"Milto Ndrenika"
+            }
+        ]
+    },
+    "recitation_data_json":{
+        "recitations":[
+            {
+                "section":"s1",
+                "instructor":"inst1",
+                "day_time":"day/time",
+                "location":"cs",
+                "ta_1":"Aarin Chase",
+                "ta_2":"Ali Afzal"
+            },
+            {
+                "section":"s2",
+                "instructor":"inst2",
+                "day_time":"mon/time",
+                "location":"loca",
+                "ta_1":"Bryan Robicheau",
+                "ta_2":"Chaeyoung Lee"
+            }
+        ]
+    },
+    "schedule_data_json":{
+        "startingMondayMonth":"5",
+        "startingMondayDay":"1",
+        "startingMondayYear":"2017",
+        "endingFridayMonth":"6",
+        "endingFridayDay":"2017",
+        "holidays":[
+            {
+                "month":"5",
+                "day":"2",
+                "time":"2",
+                "title":"title",
+                "topic":"topic",
+                "link":"link",
+                "criteria":"criteria"
+            }
+        ],
+        "lectures":[
+            {
+                "month":"5",
+                "day":"3",
+                "time":"3",
+                "title":"title2",
+                "topic":"topic2",
+                "link":"link",
+                "criteria":"criteria"
+            }
+        ],
+        "references":[
+            {
+                "month":"5",
+                "day":"3",
+                "time":"5",
+                "title":"title3",
+                "topic":"topic3",
+                "link":"link",
+                "criteria":"cr"
+            }
+        ],
+        "recitations":[
+            {
+                "month":"5",
+                "day":"4",
+                "time":"5",
+                "title":"title4",
+                "topic":"topic",
+                "link":"link",
+                "criteria":"criteria"
+            }
+        ],
+        "hws":[
+            {
+                "month":"5",
+                "day":"5",
+                "time":"6",
+                "title":"homework",
+                "topic":"hw",
+                "link":"link",
+                "criteria":"cri"
+            }
+        ]
+    },
+    "project_data_json":{
+        "teams":[
+            {
+                "name":"team1",
+                "color":"#003333",
+                "text_color":"#993300",
+                "link":"link"
+            },
+            {
+                "name":"team2",
+                "color":"#ff9980",
+                "text_color":"#996699",
+                "link":"link2"
+            }
+        ],
+        "students":[
+            {
+                "first_name":"Sam",
+                "last_name":"Sung",
+                "team":"team1",
+                "role":"role"
+            },
+            {
+                "first_name":"Bob",
+                "last_name":"Chung",
+                "team":"team2",
+                "role":"role2"
+            }
+        ]
+    }
+}

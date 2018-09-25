@@ -1,0 +1,19 @@
+
+{
+    "teams":[
+        {
+            "name":"hello",
+            "color":"#ffffff",
+            "text_color":"#ffffff",
+            "link":"link2"
+        }
+    ],
+    "students":[
+        {
+            "first_name":"fname",
+            "last_name":"lname",
+            "team":"hello",
+            "role":"role2"
+        }
+    ]
+}

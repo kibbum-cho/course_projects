@@ -1,0 +1,521 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta http-equiv="Content-Type" content="text/html"/>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="../../css/my_style.css" th:href="@{/css/my_style.css}"/>
+    <link rel="stylesheet" href="../../fonts/ionicons.min.css" th:href="@{/fonts/ionicons.min.css}"/>
+    <link rel="stylesheet" href="../../css/Footer-Clean.css" th:href="@{/css/Footer-Clean.css}"/>
+
+    <title>Manage Account</title>
+</head>
+
+
+<body>
+    <!-- Navbar -->
+    <div sec:authorize="isAnonymous()"><div th:replace="fragments/navbar">>Navbar</div></div>
+    <div sec:authorize="hasRole('ROLE_USER')"><div th:replace="fragments/user_navbar">>Navbar</div></div>
+    <div sec:authorize="hasRole('ROLE_CRITIC')"><div th:replace="fragments/user_navbar">Navbar</div></div>
+    <div sec:authorize="hasRole('ROLE_ADMIN')"><div th:replace="fragments/admin_navbar">>Navbar</div></div>
+
+    <!-- account settings -->
+    <div class="container">
+        <div class="d-flex border-top-bottom mt-4">
+            <strong>ACCOUNT SETTINGS</strong>
+        </div>
+        <div class="details-jumbotron mt-4 mb-4">
+            <div class="account-settings-block">
+                <strong class="mr-2">Hometown</strong>
+                <a href="#" data-toggle="modal" data-target="#hometownSetting">Edit</a>
+                <p>Edit your hometown</p>
+            </div>
+            <div class="account-settings-block">
+                <strong class="mr-2">Photo</strong>
+                <a href="#" data-toggle="modal" data-target="#photoSetting">Edit</a>
+                <p>Edit your Avatar</p>
+            </div>
+            <div class="account-settings-block">
+                <strong class="mr-2">Biography</strong>
+                <a href="#" data-toggle="modal" data-target="#bioSetting">Edit</a>
+                <p>Edit your biographical information.</p>
+            </div>
+            <div class="account-settings-block">
+                <strong class="mr-2">Email</strong>
+                <a href="#" data-toggle="modal" data-target="#emailSetting">Edit</a>
+                <p>Change the email for your Rotten Tomatoes account.</p>
+            </div>
+            <div class="account-settings-block">
+                <strong class="mr-2">Password</strong>
+                <a href="#" data-toggle="modal" data-target="#passwordSetting">Edit</a>
+                <p>Change the password for your Rotten Tomatoes account.</p>
+            </div>
+            <div class="account-settings-block">
+                <strong class="mr-2">Privacy Settings</strong>
+                <a href="#" data-toggle="modal" data-target="#privacySetting">Edit</a>
+                <p>Manage your profile visibility settings.</p>
+            </div>
+            <div class="account-settings-block">
+                <strong class="mr-2">Change Country</strong>
+                <a href="#" data-toggle="modal" data-target="#changeCountry">Edit</a>
+                <p>Manage your localization setting.</p>
+            </div>
+            <div sec:authorize="hasRole('ROLE_USER')" class="account-settings-block">
+                <strong class="mr-2">Apply for Critic</strong>
+                <a href="#" data-toggle="modal" data-target="#applyCritic">Apply</a>
+                <p>Apply to become a Critic.</p>
+            </div>
+            <div class="account-settings-block">
+                <strong class="mr-2">Delete Account</strong>
+                <a href="#" data-toggle="modal" data-target="#deleteAccount">Delete Account</a>
+                <p>Terminate your Rotten Tomatoes account.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hometown Setting Modal -->
+    <div class="modal fade" id="hometownSetting" tabindex="-1" role="dialog" aria-labelledby="hometownModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div th:fragment="hometownSetting" id="hometownSettingContent" class="modal-content dark-modal">
+                <div class="modal-header">
+                    <h5 class="modal-title">Hometown Setting</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form th:action="@{/changeHomeTown}" method="post" id="hometownForm">
+                    <div class="modal-body">
+                        <span class="response" th:text="${response}"></span>
+                        <div class="form-group">
+                            <label>Hometown</label>
+                            <input type="text" name="hometown" class="form-control" id="hometown" th:value="${user.hometown}?:''"/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="hometownButton" type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="photoSetting" tabindex="-1" role="dialog" aria-labelledby="photoModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div th:fragment="photoSetting" id="photoSettingContent" class="modal-content dark-modal">
+                <div class="modal-header">
+                    <h5 class="modal-title">Photo Setting</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form th:action="@{/changePhoto}" method="post" id="PhotoForm">
+                    <div class="modal-body">
+                        <span class="response" th:text="${response}"></span>
+                        <div class="form-group">
+                            <label>Photo</label>
+                            <input type="text" name="photo" class="form-control" id="photo" th:value="${user.photo}?:''"/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="photoButton" type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="bioSetting" tabindex="-1" role="dialog" aria-labelledby="bioModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div th:fragment="bioSetting" id="bioSettingContent" class="modal-content dark-modal">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Biography Setting</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form th:action="@{/changeBio}" method="post" id="bioForm">
+                    <div class="modal-body">
+                        <span class="response" th:text="${response}"></span>
+                        <div class="form-group">
+                            <label>Bio</label>
+                            <textarea class="form-control" name="bio" id="bio" rows="5" style="resize:none;" th:text="${user.bio}"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="bioButton" type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Email Modal -->
+    <div class="modal fade" id="emailSetting" tabindex="-1" role="dialog" aria-labelledby="emailModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div th:fragment="emailSetting" id="emailSettingContent" class="modal-content dark-modal">
+                <div class="modal-header">
+                    <h5 class="modal-title">Email Setting</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form th:action="@{/changeEmail}" method="post" id="emailSettingForm">
+                    <div class="modal-body">
+                        <span class="response" th:text="${response}"></span>
+                        <div class="form-group">
+                            <label for="newEmail">New Email</label>
+                            <input type="email" name="newEmail" class="form-control" id="newEmail"
+                                   placeholder="New Email"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="myPassword">Password</label>
+                            <input type="password" name="myPassword" class="form-control" id="myPassword"
+                                   placeholder="Password"/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="emailSettingButton" type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- Password Modal -->
+    <div class="modal fade" id="passwordSetting" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div th:fragment="passwordSetting" id="passwordSettingContent" class="modal-content dark-modal">
+                <div class="modal-header">
+                    <h5 class="modal-title">Password Setting</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form th:action="@{/changePassword}" method="post" id="passwordSettingForm">
+                    <div class="modal-body">
+                        <span class="response" th:text="${response}"></span>
+                        <div class="form-group">
+                            <label for="oldPassword">Old Password</label>
+                            <input type="password" name="oldPassword" class="form-control" id="oldPassword"
+                                   placeholder="Old Password"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="newPassword1">New Password</label>
+                            <input type="password" name="newPassword" class="form-control" id="newPassword1"
+                                   placeholder="New Password"/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="passwordSettingButton" type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Privacy setting Modal -->
+    <div class="modal fade" id="privacySetting" tabindex="-1" role="dialog" aria-labelledby="privacyModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div th:fragment="privacySetting" id="privacySettingContent" class="modal-content dark-modal">
+                <div class="modal-header">
+                    <h5 class="modal-title">Privacy Settings</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <label>Visibility</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
+                               value="option1" checked="true"/>
+                        <label class="form-check-label" for="exampleRadios1">
+                            Hide my profile. Only I can see my profile.
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
+                               value="option2"/>
+                        <label class="form-check-label" for="exampleRadios2">
+                            Show to all. Everybody (including anonymous users) can see my profile.
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Change Country Modal -->
+    <div class="modal fade" id="changeCountry" tabindex="-1" role="dialog" aria-labelledby="countryModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div th:fragment="changeCountry" id="changeCountryContent" class="modal-content dark-modal">
+                <div class="modal-header">
+                    <h5 class="modal-title">Change Country</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form th:action="@{/changeCountry}" method="post" id="countryForm">
+                    <div class="modal-body">
+                        <span class="response" th:text="${response}"></span>
+                        <div class="form-group">
+                            <label>Change Country</label>
+                            <input type="text" name="country" class="form-control" id="country" th:value="${user.country}" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="countryButton" type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Apply Critic Modal -->
+    <div sec:authorize="hasRole('ROLE_USER')" class="modal fade" id="applyCritic" tabindex="-1" role="dialog" aria-labelledby="applyCriticModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div th:fragment="applyCritic" id="applyCriticContent" class="modal-content dark-modal">
+                <div class="modal-header">
+                    <h5 class="modal-title">Apply</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form th:action="@{/applyCritic}" method="post" id="applyCriticForm">
+                    <div class="modal-body">
+                        <span class="response" th:text="${response}"></span>
+
+                        <div class="form-group">
+                            <label for="website">Website</label>
+                            <input type="text" name="website" class="form-control" id="website"
+                                   placeholder="www.yourwebsite.com"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="group">Group</label>
+                            <input type="text" name="groups" class="form-control" id="group"
+                                   placeholder="group"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="publications">Publication</label>
+                            <input type="text" name="publications" class="form-control" id="publications"
+                                   placeholder="publications"/>
+                        </div>
+
+                        <label>Do you want to button your application?</label>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button id="applyCriticButton" type="button" class="btn btn-primary">Apply</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Account Modal -->
+    <div class="modal fade" id="deleteAccount" tabindex="-1" role="dialog" aria-labelledby="deleteAccountModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div th:fragment="deleteAccount" id="deleteAccountContent" class="modal-content dark-modal">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete Account</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <input id="deleted" value="false" type="hidden"/>
+                <form th:unless="${deleted}" th:action="@{/deleteAccount}" method="post" id="deleteForm">
+                    <div class="modal-body">
+                        <span class="response" th:text="${response}"></span>
+                        <label>Do you want to delete your account?</label>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button id="deleteButton" type="button" class="btn btn-danger">Delete</button>
+                    </div>
+                </form>
+                <div th:if="${deleted}">
+                    <div class="modal-body">
+                        <label>Your account has been permanently deleted.</label>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- footer -->
+    <div th:replace="fragments/footer">Footer</div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="../../js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <script src="../../js/popper.min.js" th:src="@{/js/popper.min.js}"></script>
+    <script src="../../js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+
+    <script th:inline="javascript">
+        $(document).on('click', '.movie-review-delete', function(){
+            var id =  $(this).data("id");
+            $('#listType').val('movie-review');
+            $('#deleteId').val(id);
+            $('#delete-modal-title').text('Movie Review Delete');
+            $('#delete-modal-body').text('Do you want to delete this review?');
+            $("#deleteConfirmModal").modal('show');
+        });
+
+        $(document).on("click", "#hometownButton", function () {
+            $('.response').text('');
+            $.ajax({
+                method: "POST",
+                url: "/changeHomeTown",
+                data: $('#hometownForm').serialize(),
+                success: function(data){
+                    $('#hometownSettingContent').replaceWith(data);
+                }
+            });
+        });
+
+
+        $(document).on("click", "#photoButton", function () {
+            $('.response').text('');
+            $.ajax({
+                method: "POST",
+                url: "/changePhoto",
+                data: $('#PhotoForm').serialize(),
+                success: function(data){
+                    $('#photoSettingContent').replaceWith(data);
+                }
+            });
+        });
+        $(document).on("click", "#bioButton", function () {
+            $('.response').text('');
+            $.ajax({
+                method: "POST",
+                url: "/changeBio",
+                data: $('#bioForm').serialize(),
+                success: function(data){
+                    $('#bioSettingContent').replaceWith(data);
+                }
+            });
+        });
+
+        $(document).on("click", "#emailSettingButton", function () {
+            $('.response').text('');
+            $.ajax({
+                method: "POST",
+                url: "/changeEmail",
+                data: $('#emailSettingForm').serialize(),
+                success: function(data){
+                    $('#emailSettingContent').replaceWith(data);
+                }
+            });
+        });
+
+        $(document).on("click", "#passwordSettingButton", function () {
+            $('.response').text('');
+            $.ajax({
+                method: "POST",
+                url: "/changePassword",
+                data: $('#passwordSettingForm').serialize(),
+                success: function(data){
+                    $('#passwordSettingContent').replaceWith(data);
+                }
+            });
+        });
+
+        $(document).on("click", "#countryButton", function () {
+            $('.response').text('');
+            $.ajax({
+                method: "POST",
+                url: "/changeCountry",
+                data: $('#countryForm').serialize(),
+                success: function(data){
+                    $('#changeCountryContent').replaceWith(data);
+                }
+            });
+        });
+
+        $(document).on("click", "#applyCriticButton", function () {
+            $('.response').text('');
+            $.ajax({
+                method: "POST",
+                url: "/applyCritic",
+                data: $('#applyCriticForm').serialize(),
+                success: function(data){
+                    $('#applyCriticContent').replaceWith(data);
+                }
+            });
+        });
+
+        $(document).on("click", "#deleteButton", function () {
+            $.ajax({
+                method: "POST",
+                url: "/deleteAccount",
+                data: $('#deleteForm').serialize(),
+                success: function(data){
+                    $('#deleteAccountContent').replaceWith(data);
+                    $('#deleted').val("true");
+                }
+            });
+        });
+
+
+        $(document).on("keypress", "form", function(e) {
+            if (e.which == 13) {
+                return false;
+            }
+        });
+
+        $(document).ready(function(){
+            $('.modal').on('hidden.bs.modal', function (e) {
+                $('.response').text('');
+            });
+        });
+
+        $('#deleteAccount').on('hidden.bs.modal', function (e) {
+            if($('#deleted').val() == "true"){
+                window.location.href = '/index';
+            }
+        });
+
+
+    </script>
+
+</body>
+</html>

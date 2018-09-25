@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    This XML file allows us to easily customize the look and language used
+    in our program's user interface. Note that this properties file is only
+    for the standard controls for an app from the Desktop Java Framework, so
+    it would not include things initialized for the workspace, which is
+    customizable.
+-->
+<properties>
+    <property_list>
+        <property name="APP_TITLE"	    value="코스 사이트 제너레이터"></property>
+	<property name="APP_LOGO"	    value="CSGLogo.png"></property>
+	<property name="APP_PATH_CSS"	    value="style/"></property>
+	<property name="APP_CSS"	    value="csg_style.css"></property>
+        
+        <!-- PROGRAM ICON FILES -->
+        <property name="NEW_ICON"	    value="New.png"></property>
+        <property name="LOAD_ICON"	    value="Load.png"></property>
+        <property name="SAVE_ICON"	    value="Save.png"></property>
+        <property name="EXIT_ICON"          value="Exit.png"></property> 
+        <property name="SAVE_AS_ICON"	    value="SaveAs.png"></property>
+        <property name="EXPORT_ICON"	    value="Export.png"></property>
+        <property name="REDO_ICON"          value="Redo.png"></property> 
+        <property name="UNDO_ICON"	    value="Undo.png"></property>
+        <property name="ABOUT_ICON"	    value="About.png"></property>
+        <property name="ADD_ICON"	    value="Add.png"></property>
+        <property name="REMOVE_ICON"	    value="Remove.png"></property>
+        
+        <!-- TOOLTIPS FOR BUTTONS -->
+        <property name="NEW_TOOLTIP"		value="새로운 파일을 만듭니다"></property>
+        <property name="LOAD_TOOLTIP"		value="저장된 파일을 불러옵니다"></property>
+        <property name="SAVE_TOOLTIP"		value="현재 작업을 저장합니다"></property>
+        <property name="EXIT_TOOLTIP"		value="애플리케이션을 종료합니다"></property>
+        <property name="SAVE_AS_TOOLTIP"	value="현재 작업을 다른이름으로 저장합니다"></property>
+        <property name="EXPORT_TOOLTIP"         value="현재작업을 추출합니다"></property>
+        <property name="REDO_TOOLTIP"         value="취소된 작업을 재실행합니다"></property>
+        <property name="UNDO_TOOLTIP"         value="한단계 전으로 되돌립니다"></property>
+        <property name="ABOUT_TOOLTIP"         value="유용한 정보"></property>
+        <property name="ADD_TOOLTIP"            value="추가"></property>
+        <property name="REMOVE_TOOLTIP"         value="제거"></property>
+        
+        <!-- ERROR MESSAGES -->
+        <property name="CLOSE_BUTTON_TEXT"              value="닫기"></property>
+
+        <property name="NEW_ERROR_MESSAGE"              value="새로만들기중 문제가 발생하였습니다."></property>
+        <property name="NEW_ERROR_TITLE"		value="새로만들기 에러"></property>
+        <property name="LOAD_ERROR_MESSAGE"             value="불러오기중 문제가 발생하였습니다."></property>
+        <property name="LOAD_ERROR_TITLE"		value="불러오기 에러"></property>
+        <property name="SAVE_ERROR_MESSAGE"             value="저장하던중 문제가 발생하였습니다."></property>
+        <property name="SAVE_ERROR_TITLE"		value="저장하기 에러"></property>
+        <property name="PROPERTIES_LOAD_ERROR_MESSAGE"	value="프로퍼티를 불러오던중 문제가 발생하였습니다."></property>	
+        <property name="PROPERTIES_LOAD_ERROR_TITLE"	value="프로퍼티 불러오기 에러"></property>
+	
+        <!-- VERIFICATION MESSAGES -->
+	
+        <property name="NEW_COMPLETED_MESSAGE"		value="새로만들기가 준비완료 되었습니다"></property>
+        <property name="NEW_COMPLETED_TITLE"		value="새로만들기 준비완료"></property>
+        <property name="LOAD_COMPLETED_MESSAGE"		value="파일불러오기를 완료하였습니다 작업할 준비가 되었습니다"></property>
+        <property name="LOAD_COMPLETED_TITLE"		value="불러오기 완료"></property>
+        <property name="SAVE_COMPLETED_MESSAGE"		value="저장을 완료하였습니다"></property>
+        <property name="SAVE_COMPLETED_TITLE"		value="저장 완료"></property>
+        <property name="EXPORT_COMPLETED_MESSAGE"	value="파일추출을 완료하였습니다"></property>
+        <property name="EXPORT_COMPLETED_TITLE"		value="파일추출 완료"></property>
+        <property name="SAVE_UNSAVED_WORK_MESSAGE"	value="저장되지 않은 작업을 저장하시겠습니까?"></property>
+        <property name="SAVE_UNSAVED_WORK_TITLE"	value="저장?"></property>
+	
+        <property name="NEW_CREATED_MESSAGE"		value="저장되지 않은 새로운 작업이 생성되었습니다"></property>
+        <property name="WORK_LOADED_MESSAGE"		value="작업을 불러왔습니다"></property>
+        <property name="WORK_SAVED_MESSAGE"		value="작업이 저장되었습니다"></property>
+        <property name="SAVE_UNSAVED_WORK_MESSAGE"	value="현재 작업이 저장되지 않았습니다. 저장하시겠습니까?"></property>
+	<property name="SAVE_WORK_TITLE"		value="저장"></property>
+	<property name="LOAD_WORK_TITLE"		value="불러올 파일을 선택"></property>
+        <property name="SAVE_AS_WORK_TITLE"		value="다른이름으로 저장"></property>
+        <property name="EXPORT_WORK_TITLE"		value="추출할 경로 선택"></property>
+        <property name="SELECT_TEMPLATE_TITLE"		value="탬플릿 경로 선택"></property>
+	<property name="WORK_FILE_EXT"			value=".json"></property>
+	<property name="WORK_FILE_EXT_DESC"		value="Course Site Generator"></property>
+
+        <!-- WORKSPACE CONTROLS STUFF -->    
+        <property name="COURSE_DETAILS_TAB"             value="과목 정보"></property>
+        <property name="TA_DATA_TAB"                    value="조교"></property>
+        <property name="RECITATION_DATA_TAB"            value="레씨테이션"></property>
+        <property name="SCHEDULE_DATA_TAB"              value="일정"></property>
+        <property name="PROJECT_DATA_TAB"               value="프로젝트"></property>
+        
+        <!-- COMMON STUFF -->
+        <property name="CHANGE_BUTTON"               value="바꾸기"></property>
+        <property name="ADD_UPDATE_BUTTON"               value="추가/갱신"></property>
+        <property name="CLEAR_BUTTON"               value="클리어"></property>
+        <property name="REMOVE_BUTTON"                  value="-"></property>
+        
+        
+        <!-- COURSE DETAILS WORKSPACE STUFF -->   
+        <property name="CT_COURSE_DETAILS_HEADER"               value="과목 세부사항"></property>
+        <property name="CT_COURSE_INFO_SUBHEADER"               value="과목 정보"></property>
+        <property name="CT_SUBJECT"               value="과목:"></property>
+        <property name="CT_NUMBER"               value="번호:"></property>
+        <property name="CT_SEMESTER"               value="학기:"></property>
+        <property name="CT_YEAR"               value="년도:"></property>
+        <property name="CT_TITLE"               value="타이틀:"></property>
+        <property name="CT_INSTRUCTOR_NAME"               value="교수 이름:"></property>
+        <property name="CT_INSTRUCTOR_HOME"               value="교수 홈페이지:"></property>
+        <property name="CT_EXPORT_DIRECTORY"               value="추출 경로:"></property>
+        
+        
+        <property name="CT_SITE_TEMPLATE_SUBHEADER"               value="사이트 템플릿"></property>
+        <property name="CT_SITE_TEMPLATE_DESCRIPTION"               value="선택된 경로는 HTML 파일을 포함한 모든 사이트 템플릿을 포함해야 합니다"></property>
+        <property name="CT_SELECT_TEMPLATE_DIRECTORY_BUTTON"               value="템플릿 경로 선택"></property>
+        <property name="CT_SITE_PAGES"               value="사이트 페이지:"></property>
+        
+        <property name="CT_PAGE_STYLE_SUBHEADER"               value="페이지 스타일"></property>
+        <property name="CT_BANNER_SCHOOL_IMAGE"               value="학교 배너 이미지:"></property>
+        <property name="CT_LEFT_FOOTER_IMAGE"               value="왼쪽아래 첨가 이미지:"></property>
+        <property name="CT_RIGHT_FOOTER_IMAGE"               value="오른쪽아래 첨가 이미지"></property>
+        <property name="CT_STYLESHEET"               value="스타일시트:"></property>
+        <property name="CT_PAGE_STYLE_NOTE"               value="새로운 스타일시트는 work/css 에 선택될 수 있도록 위치될 수 있습니다"></property>
+        
+        
+        <!-- TA DATA WORKSPACE  -->
+        <property name="TAS_HEADER_TEXT"                value="조교"></property>
+        <property name="UNDERGRAD_COLUMN_TEXT"               value="학부"></property>
+        <property name="UNDERGRAD_CHECKBOX"               value="학부:"></property>
+        <property name="NAME_COLUMN_TEXT"               value="이름"></property>
+        <property name="EMAIL_COLUMN_TEXT"              value="이메일"></property>
+        <property name="NAME_PROMPT_TEXT"               value="이름"></property>
+        <property name="EMAIL_PROMPT_TEXT"              value="이메일"></property>
+        <property name="ADD_BUTTON_TEXT"                value="추가"></property>
+        
+        <property name="CHANGE_HOURS_BUTTON_TEXT"                value="시간 수정"></property>
+        <property name="UPDATE_BUTTON_TEXT"                value="갱신"></property>
+        <property name="CLEAR_BUTTON_TEXT"                value="클리어"></property>
+        <property name="OFFICE_HOURS_SUBHEADER"         value="시간표"></property>
+        <property name="OFFICE_HOURS_START_TIME"         value="시작:"></property>
+        <property name="OFFICE_HOURS_END_TIME"         value="끝:"></property>
+        
+        <!-- WORKSPACE ERROR MESSAGES -->
+        <property name="MISSING_TA_NAME_TITLE"          value="이름 없음"></property>
+        <property name="MISSING_TA_NAME_MESSAGE"        value="이름을 기입하여 주십시오"></property>
+        <property name="MISSING_TA_EMAIL_TITLE"         value="이메일 없음"></property>
+        <property name="MISSING_TA_EMAIL_MESSAGE"       value="이메일을 기입하여 주십시오"></property>
+        <property name="TA_NAME_AND_EMAIL_NOT_UNIQUE_TITLE"     value="조교 이름/이메일 중복"></property>
+        <property name="TA_NAME_AND_EMAIL_NOT_UNIQUE_MESSAGE"   value="중복되지 않는 이름/이메일을 기입하여 주십시오"></property>
+        
+        <property name="TA_EMAIL_NOT_VALID_TITLE"     value="이메일형식 오류"></property>
+        <property name="TA_EMAIL_NOT_VALID_MESSAGE"   value="이메일이 올바른 형식이 아닙니다"></property>
+        
+        <property name="TA_NOT_SELECTED_TITLE"     value="조교 선택되지 않음"></property>
+        <property name="TA_NOT_SELECTED_MESSAGE"   value="조교가 선택되지 않았습니다"></property>
+        
+        <property name="COMBOBOX_HOUR_ERROR_TITLE"     value="선택시간 에러"></property>
+        <property name="COMBOBOX_START_HOUR_ERROR_MESSAGE"     value="시작시간은 끝나는 시간 전이어야 합니다"></property>
+        <property name="COMBOBOX_END_HOUR_ERROR_MESSAGE"     value="끝나는 시간은 시작시간 이후여야 합니다"></property>
+        <property name="COMBOBOX_SELECTION_CONFLICT_TITLE"     value="일정 삭제 경고"></property>
+        <property name="COMBOBOX_SELECTION_CONFLICT_MESSAGE"     value="변경된 시간이 일부 조교 근무시간 을 삭제합니다. 계속 하시겠습니까?"></property>
+        
+     
+        <!-- RECITATION DATA WORKSPACE STUFF -->
+        <property name="RT_RECITATIONS_HEADER"               value="레씨테이션"></property>
+        <property name="RT_ADD_EDIT_SUBHEADER"               value="추가/수정"></property>
+        <property name="RT_SECTION"               value="섹션:"></property>
+        <property name="RT_INSTRUCTOR"               value="교수:"></property>
+        <property name="RT_DAY_TIME"               value="요일/시간:"></property>
+        <property name="RT_LOCATION"               value="장소:"></property>
+        <property name="RT_SUPERVISING_TA"               value="감독 조교"></property>
+        
+        
+        <!-- SCHEDULE DATA WORKSPACE STUFF -->
+        <property name="ST_SCHEDULE_HEADER"               value="일정"></property>
+        <property name="ST_CALENDAR_BOUNDARIES_SUBHEADER"               value="달력 표시 기간"></property>
+        <property name="ST_STARTING_MONDAY"               value="시작 월요일:"></property>
+        <property name="ST_ENDING_FRIDAY"               value="마지막 금요일:"></property>
+        <property name="ST_SCHEDULE_ITEMS_SUBHEADER"               value="일정들"></property>
+        <property name="ST_ADD_EDIT_SUBHEADER"               value="일정 추가/수정"></property>
+        <property name="ST_TYPE"               value="종류:"></property>
+        <property name="ST_DATE"               value="날짜:"></property>
+        <property name="ST_TIME"               value="시간:"></property>
+        <property name="ST_TITLE"               value="제목:"></property>
+        <property name="ST_TOPIC"               value="주제:"></property>
+        <property name="ST_LINK"               value="링크:"></property>
+        <property name="ST_CRITERIA"               value="크라이테리아:"></property>
+        
+        <!-- SCHEDULE DATA WORKSPACE STUFF -->
+        <property name="PT_PROJECTS_HEADER"               value="프로젝트"></property>
+        <property name="PT_TEAMS_SUBHEADER"               value="팀"></property>
+        <property name="PT_ADD_EDIT_SUBHEADER"               value="팀 추가/수정"></property>
+        <property name="PT_NAME"               value="이름:"></property>
+        <property name="PT_COLOR"               value="색"></property>
+        <property name="PT_TEXT_COLOR"               value="글자 색:"></property>
+        <property name="PT_LINK"               value="링크:"></property>
+        <property name="PT_STUDENTS_SUBHEADER"               value="학생"></property>
+        <property name="PT_FIRST_NAME"               value="이름:"></property>
+        <property name="PT_LAST_NAME"               value="성:"></property>
+        <property name="PT_TEAM"               value="팀:"></property>
+        <property name="PT_ROLE"               value="역할:"></property>
+        
+    </property_list>
+    
+    <property_options_list>
+        
+        <property_options name="CT_SITE_PAGE_TABLE_HEADERS">
+            <option>사용</option>
+            <option>내비바 타이틀</option>
+            <option>파일 이름</option>
+            <option>스크립트</option>
+        </property_options>
+        
+        <property_options name="OFFICE_HOURS_TABLE_HEADERS">
+            <option>시작</option>
+            <option>끝</option>
+        </property_options>
+        <property_options name="DAYS_OF_WEEK">
+            <option>월</option>
+            <option>화</option>
+            <option>수</option>
+            <option>목</option>
+            <option>금</option>
+        </property_options>
+        
+        <property_options name="RT_RECITATION_TABLE_HEADERS">
+            <option>섹션</option>
+            <option>교수</option>
+            <option>일/시</option>
+            <option>장소</option>
+            <option>조교</option>
+            <option>조교</option>
+        </property_options>
+        
+        <property_options name="ST_SCHEDULE_ITEMS_TABLE_HEADERS">
+            <option>종류</option>
+            <option>날짜</option>
+            <option>타이틀</option>
+            <option>토픽</option>
+        </property_options>
+        
+        <property_options name="PT_PROJECT_TABLE_HEADERS">
+            <option>이름</option>
+            <option>색 (hex#)</option>
+            <option>글자 색 (hex#)</option>
+            <option>링크</option>
+        </property_options>
+        
+        <property_options name="PT_STUDENTS_TABLE_HEADERS">
+            <option>이름</option>
+            <option>성</option>
+            <option>팀</option>
+            <option>역할</option>
+        </property_options>
+        
+    </property_options_list>
+    
+</properties>

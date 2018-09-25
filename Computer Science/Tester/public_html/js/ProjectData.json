@@ -1,0 +1,37 @@
+
+{
+    "teams":[
+        {
+            "name":"asdf",
+            "color":"#ffffff",
+            "text_color":"#990000",
+            "link":"asdfa"
+        },
+        {
+            "name":"ewfawefawe",
+            "color":"#003333",
+            "text_color":"#661a33",
+            "link":"awefawef"
+        },
+        {
+            "name":"gafdfgdf",
+            "color":"#331a80",
+            "text_color":"#4d1a4d",
+            "link":"sdafasdf"
+        }
+    ],
+    "students":[
+        {
+            "first_name":"fawefaew",
+            "last_name":"asdfasdf",
+            "team":"ewfawefawe",
+            "role":"asdfasd"
+        },
+        {
+            "first_name":"gfgsgfg",
+            "last_name":"sdfgsdfgsdfg",
+            "team":"ewfawefawe",
+            "role":"gtgaeragreg"
+        }
+    ]
+}

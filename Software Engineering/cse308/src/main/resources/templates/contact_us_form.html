@@ -1,0 +1,80 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta http-equiv="Content-Type" content="text/html"/>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="../../css/my_style.css" th:href="@{/css/my_style.css}"/>
+    <link rel="stylesheet" href="../../fonts/ionicons.min.css" th:href="@{/fonts/ionicons.min.css}"/>
+    <link rel="stylesheet" href="../../css/Footer-Clean.css" th:href="@{/css/Footer-Clean.css}"/>
+    <link rel="stylesheet" href="../../css/Simple-Contact-Form.css" th:href="@{/css/Simple-Contact-Form.css}"/>
+
+    <title>Manage Account</title>
+</head>
+
+
+<body>
+<!-- Navbar -->
+<div sec:authorize="isAnonymous()"><div th:replace="fragments/navbar">>Navbar</div></div>
+<div sec:authorize="hasRole('ROLE_USER')"><div th:replace="fragments/user_navbar">>Navbar</div></div>
+<div sec:authorize="hasRole('ROLE_CRITIC')"><div th:replace="fragments/user_navbar">Navbar</div></div>
+<div sec:authorize="hasRole('ROLE_ADMIN')"><div th:replace="fragments/admin_navbar">>Navbar</div></div>
+
+<div class="container">
+    <section class="td-form">
+        <div class="row td-form-wrapper">
+            <div class="col td-glass">
+                <form th:action="@{/contactUs}" method="post" class="td-form-wrapper">
+                    <h1 class="text-center">Contact Us</h1>
+                    <div class="form-group">
+                        <div class="col-md-12"><label>Your Name *</label>
+                            <div class="d-flex"><i class="icon ion-person align-self-center"></i><input class="form-control d-flex" type="text" name="name" required="" placeholder="Your Name" autocomplete="off"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12"><label>Email Address *</label>
+                            <div class="d-flex"><i class="icon ion-ios-email align-self-center"></i><input class="form-control" type="text" name="email" required="" placeholder="services@contactus.com" autocomplete="off" inputmode="email"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12"><label>Subject: * </label>
+                            <div class="d-flex td-input-container"><i class="icon ion-ios-information align-self-center"></i><input class="form-control" type="text" name="subject" required="" autocomplete="off" placeholder="Subject"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12"><label>Message Details *</label>
+                            <div class="d-flex td-input-container"><i class="icon ion-android-create align-self-center"></i><textarea class="form-control" rows="6" cols="50" name="message" placeholder="Add message here"></textarea></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12"><button class="btn btn-dark float-right" type="submit">Send us your message!</button></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="container text-center mt-3 mb-3">
+    <a target="_blank" href="https://adclick.g.doubleclick.net/pcs/click?xai=AKAOjsuW0I9OQVKOiWTnETUY51KDAwh-QgwrDB22euHjMHQ1VHKxiQbJ6MfKVOc5Nslc9J0QQzJs_-pMt6oMw-9hVijtxCW4Wv2JYoToAiT24ovnZDr69CBIuv4VFN3B9gMjO9ISWOxirmG1UrIIg37T3mR_PlJxwhQii4HOBzz9FfFKJL0weDV6ll-O140p48tScKaYV03_AL8njnJZN-3vamo-4QN_GGG3yjGc5Z-2s5fzRLnz4TaM_CTH6y5nAD5pBySekAouHhzjsjAZfLKgEjXcGkrUMLDJC0zWFUtnYe2JZzc99cWlju3JICcfk0JcVh2x8CbmW8Dsif7FofW-QQuZ7zesawImLtaDiA&amp;sai=AMfl-YRUVnL7Hsa3FOHqmtBPwtFaNmP9cOcNjdvGjrcoNUwkMoeNuZsG8lkTIFfwSkGDIsPVOH-RfnhMMI4EbuVNmdJTOHYgm9fjqm8zCJpgpZEh-v1pAOvjtpDQfxY&amp;sig=Cg0ArKJSzN9Qqm86pAKl&amp;urlfix=1&amp;adurl=https://try.digitalocean.com/performance/%3Futm_medium%3Ddisplay%26utm_source%3Dstackoverflow%26utm_campaign%3D2018_Brand%26utm_content%3DDO_UI_728x90_Light%26utm_term%3DNewYork">
+        <img src="https://s0.2mdn.net/8354950/1-DO_UI_728x90_Light.jpg" alt="Advertisement" border="0" width="728" height="90" class="align-content-center">
+    </a>
+</div>
+
+<!-- footer -->
+<div th:replace="fragments/footer">Footer</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="../../js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<script src="../../js/popper.min.js" th:src="@{/js/popper.min.js}"></script>
+<script src="../../js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+</body>
+</html>

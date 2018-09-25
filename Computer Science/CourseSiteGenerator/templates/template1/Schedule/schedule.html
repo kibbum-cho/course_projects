@@ -1,0 +1,77 @@
+
+<!-- saved from url=(0061)http://www3.cs.stonybrook.edu/~cse219/Section02/schedule.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+        <!-- TITLE HAS TO BE SET -->
+
+	<title>CSE 219</title>
+
+	
+
+	<link href="./css/course_homepage_layout.css" rel="stylesheet" type="text/css">
+
+	<link href="./css/sea_wolf.css" rel="stylesheet" type="text/css">
+		
+        <!-- LINK TO OUR JavaScript FILE AND JQuery -->
+        <script src="./js/jquery.min.js"></script>
+        <script src="./js/ScheduleBuilder.js"></script>
+
+	<!-- ONCE THE PAGE FULLY LOADS INITIALIZE THE SLIDESHOW -->
+        <script>
+	    $(document).ready()
+	    {
+		initSchedule();
+	    }
+        </script>
+    </head>
+
+
+    <body>
+
+	<div id="content">
+
+	    <div id="navbar">
+
+		<a href="http://www.stonybrook.edu/"><img alt="Stony Brook University" class="sbu_navbar" src="./CSE 219_files/SBUDarkRedShieldLogo.png"></a>
+                <!-- NAVIGATION LINKS GO HERE -->
+		<a class="nav" href="http://www3.cs.stonybrook.edu/~cse219/Section02/index.html" id="home_link">Home</a><a class="nav" href="http://www3.cs.stonybrook.edu/~cse219/Section02/syllabus.html" id="syllabus_link">Syllabus</a><a class="open_nav" href="http://www3.cs.stonybrook.edu/~cse219/Section02/schedule.html" id="schedule_link">Schedule</a><a class="nav" href="http://www3.cs.stonybrook.edu/~cse219/Section02/hws.html" id="hws_link">HWs</a>
+	    </div>
+
+
+	    <div id="banner">
+                <!-- BANNER NEEDS TO BE SET -->
+		CSE 219 - Spring 2017<br>Computer Science III - 02</div>
+
+	    <div id="desc">
+
+		<table border="1" cellspacing="0" class="schedule">
+                    <tbody id="schedule_table">
+                        <!-- THIS WILL BE FILLED IN BY JAVASCRIPT -->                        
+                    </tbody>
+		</table>
+
+		<br>
+
+		<hr>
+
+
+		<a href="http://www.stonybrook.edu/"><img alt="SBU" class="sunysb" src="./CSE 219_files/SBUWhiteShieldLogo.jpg" style="float:left"></a>
+                <a href="http://www.cs.stonybrook.edu/"><img alt="CS" src="./CSE 219_files/CSLogo.png" style="float:right"></a>
+
+
+		<p style="font-size:9pt; text-align:center;">Web page created and maintained<br>
+                    by <span id="instructor_link"><a href="http://www.cs.stonybrook.edu/~richard">Richard McKenna</a></span>
+		    <br>
+		    <br>
+		    <br>
+		    <br>
+		</p>
+
+	    </div>
+
+	</div>
+
+    
+
+
+</body></html>

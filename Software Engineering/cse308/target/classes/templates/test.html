@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="css/my_style.css">
+    <link rel="stylesheet" href="fonts/ionicons.min.css">
+    <link rel="stylesheet" href="css/Footer-Clean.css">
+
+    <title>Rotten Tomatoes</title>
+</head>
+
+
+<body>
+<!-- Navbar -->
+<div id="navbar"></div>
+
+<!-- Details body -->
+<div id="movie_details_body"></div>
+
+
+<!-- footer -->
+<div id="footer"></div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+<script>
+    $(function(){
+        $("#navbar").load("navbar.html");
+        $("#movie_details_body").load("movie_details_body.html");
+        $("#footer").load("footer.html");
+    });
+</script>
+
+</body>
+</html>

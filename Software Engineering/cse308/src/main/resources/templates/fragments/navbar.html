@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="../../../css/my_style.css" th:href="@{/css/my_style.css}"/>
+    <link rel="stylesheet" href="../../../fonts/ionicons.min.css" th:href="@{/fonts/ionicons.min.css}"/>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-black">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/index}">MapleMovies</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav ml-auto mr-5 mt-auto">
+                <li class="nav-item">
+                    <a class="nav-link ml-2 mr-2" th:href="@{/index}" style="font-size: 20px;">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link ml-2 mr-2" th:href="@{/movies}" style="font-size: 20px;">Movies</a>
+                    <div class="dropdown-content">
+                        <a th:href="@{/movies/opening}">Opening This Week</a>
+                        <a th:href="@{/movies/topbox}">Top Box Office</a>
+                        <a th:href="@{/movies/coming}">Coming Soon</a>
+                        <a th:href="@{/movies/highest}">Highest Rated</a>
+                        <a href="/academy_awards?year=2015">Academy Awards</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link ml-2 mr-2" th:href="@{/tv}" style="font-size: 20px;">TV</a>
+                    <div class="dropdown-content">
+                        <a th:href="@{/tv/open}">New TV Tonight</a>
+                        <a th:href="@{/tv/popular}">Most Popular TV</a>
+                    </div>
+                </li>
+            </ul>
+            <nav class="navbar-nav flex-column">
+                <ul class="nav justify-content-end mt-0">
+                    <li class="nav-item mr-1">
+                        <a id="login" class="nav-link" href="#" style="font-size: 13px;" data-toggle="modal" data-target="#login_modal" data-whatever="login">Log in</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="signup" class="nav-link" href="#" style="font-size: 13px;" data-toggle="modal" data-target="#signup_modal" data-whatever="signup">Sign up</a>
+                    </li>
+                </ul>
+                <form th:action="@{/search/all}" method="get" class="form-inline mt-1 mt-md-0 mb-1">
+                    <input class="form-control mr-sm-2" id="search" name="search" type="text" placeholder="Search" aria-label="Search"/>
+                    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </nav>
+
+        </div>
+    </div>
+</nav>
+
+<!-- Log in modal -->
+<div class="modal fade" id="login_modal" tabindex="-1" role="dialog" aria-labelledby="loginSignupLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="color: #000000">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginLabel">Log In</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form th:action="@{/login}" method="post">
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="usernameLogin" class="col-sm-2 col-form-label">Username</label>
+                        <div class="col-sm-10">
+                            <input name="username" type="text" class="form-control" id="usernameLogin" placeholder="Enter Username"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="passwordLogin" class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-sm-10">
+                            <input name="password" type="password" class="form-control" id="passwordLogin" placeholder="Password"/>
+                        </div>
+                    </div>
+                    <div class="nav flex-column">
+                        <a th:href="@{/forgotPassword}" style="color: black;">Forgot password?</a>
+                        <!--<a th:href="@{/resetPassword}" style="color: white;">Reset password</a>-->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-outline-primary">Log in</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Sign up modal -->
+<div class="modal fade" id="signup_modal" tabindex="-1" role="dialog" aria-labelledby="signupLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="color: #000000">
+            <div class="modal-header">
+                <h5 class="modal-title" id="signupLabel">Sign Up</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form th:action="@{/registration}" method="post">
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="username" class="col-sm-2 col-form-label">Username</label>
+                        <div class="col-sm-10">
+                            <input name="username" type="text" class="form-control" id="username" placeholder="Name"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="email" class="col-sm-2 col-form-label">Email</label>
+                        <div class="col-sm-10">
+                            <input name="email" type="email" class="form-control" id="email" placeholder="Email"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="passwordSignup" class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-sm-10">
+                            <input name="password" type="password" class="form-control" id="passwordSignUp" placeholder="Password"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
+                        <div class="col-sm-10">
+                            <input name="firstName" type="text" class="form-control" id="firstName" placeholder="First Name"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
+                        <div class="col-sm-10">
+                            <input name="lastName" type="text" class="form-control" id="lastName" placeholder="Last Name"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-outline-primary">Sign Up</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

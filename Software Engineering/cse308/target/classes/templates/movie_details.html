@@ -1,0 +1,497 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta http-equiv="Content-Type" content="text/html"/>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="../../css/my_style.css" th:href="@{/css/my_style.css}"/>
+    <link rel="stylesheet" href="../../fonts/ionicons.min.css" th:href="@{/fonts/ionicons.min.css}"/>
+    <link rel="stylesheet" href="../../css/Footer-Clean.css" th:href="@{/css/Footer-Clean.css}"/>
+    <link rel="stylesheet" href="../../css/star-rating.css" th:href="@{/css/star-rating.css}"/>
+    <link rel="stylesheet" href="../../css/ratings.css" th:href="@{/css/ratings.css}"/>
+
+    <title>Movie Details</title>
+</head>
+
+
+<body>
+<!-- Navbar -->
+<div sec:authorize="isAnonymous()"><div th:replace="fragments/navbar">Navbar</div></div>
+<div sec:authorize="hasRole('ROLE_USER')"><div th:replace="fragments/user_navbar">Navbar</div></div>
+<div sec:authorize="hasRole('ROLE_CRITIC')"><div th:replace="fragments/user_navbar">Navbar</div></div>
+<div sec:authorize="hasRole('ROLE_ADMIN')"><div th:replace="fragments/admin_navbar">Navbar</div></div>
+
+<!-- Details body -->
+<!-- Side chart -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-7 col-lg-4 mb-3">
+            <div class="jumbotron-side">
+                <h6><strong>IN THEATERS</strong></h6>
+                <nav class="nav flex-column w-100">
+                    <a class="nav-link side active text-white" th:href="@{/movies/opening}">Opening This Week</a>
+                    <a class="nav-link side text-white" th:href="@{/movies/topbox}">Top Box Office</a>
+                    <a class="nav-link side text-white" th:href="@{/movies/coming}">Coming Soon</a>
+                    <a class="nav-link side text-white" href="/academy_awards?year=2015">Academy Awards</a>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Movie detail colum -->
+        <div class="col-sm-12 col-md-12 col-lg-8">
+            <!-- Trailer -->
+            <div th:unless="${trailers.isEmpty()}" class="embed-responsive embed-responsive-16by9">
+                <iframe th:src="@{${trailers.iterator().next().getVideo()}}" class="embed-responsive-item" controls="controls"></iframe>
+            </div>
+
+            <!-- Movie details -->
+            <div class="card detail-card flex-md-row mb-4 mt-4">
+                <div class="card-poster-container align-items-center">
+                    <img th:src="@{${movie.poster}}" class="card-detail-poster" alt="poster"/>
+                </div>
+                <div id="reviewForm" class="w-100">
+                <div th:fragment="reviewForm" class="card-body d-flex flex-column align-items-start">
+                    <h5 class="mb-0">
+                    <a class="detail-title" th:text="${movie.title}">Movie Title</a>
+                    </h5>
+                    <div class="mb-1 text-muted" th:text="${movie.getReleaseYear()}">2018</div>
+                        <div class="row w-100 ratings">
+                            <div class="d-flex w-100">
+                                <div class="pt-2 pl-2 pb-2 pr-0">Critic Score:</div>
+                                <div class="pt-2 pr-0 pb-2 pl-1">
+                                    <input class="rating rating-loading score p-0" th:value="${criticRating}" data-stars="5" data-min="0" data-max="5" data-size="xxxs" disabled=true data-show-clear="false" data-show-caption="false"/>
+                                </div>
+                                <span class="pt-2 pr-1 pb-2 pl-0" th:unless="${criticRating==0}" th:text="${criticRating}"></span>
+                                <div class="ml-auto pt-2 pl-2 pb-2 pr-0">User Score:</div>
+                                <div class="pt-2 pr-0 pb-2 pl-1">
+                                    <input class="rating rating-loading score p-0" th:value="${userRating}" data-stars="5" data-min="0" data-max="5" data-size="xxxs" disabled=true data-show-clear="false" data-show-caption="false"/>
+                                </div>
+                                <span class="pt-2 pr-1 pb-2 pl-0" th:unless="${userRating==0}" th:text="${userRating}"></span>
+                            </div>
+                        </div>
+                        <div class="d-flex w-100 mt-3 pl-3" >
+                            <div style="font-size: 20px;">Add Your Rating</div>
+                            <form th:action="@{/}" method="post" id="addToNotInterestedForm" class="ml-auto">
+                                <input name="movieId" type="hidden" th:value="${movie.movieId}"/>
+                                <button sec:authorize="isAuthenticated()" type="button" id="addToNotInterested" class="btn btn-danger btn-sm mr-1">+ Not Interested</button>
+                                <button sec:authorize="isAnonymous()" data-toggle="modal" data-target="#login_modal" type="button" class="btn btn-danger btn-sm ml-auto mr-1">+ Not Interested</button>
+                            </form>
+                            <form th:action="@{/}" method="post" id="addToWantToSeeListForm">
+                                <input name="movieId" type="hidden" th:value="${movie.movieId}"/>
+                                <button sec:authorize="isAuthenticated()" type="button" id="addToWantToSee" class="btn btn-primary btn-sm">+ Want To See List</button>
+                                <button sec:authorize="isAnonymous()" data-toggle="modal" data-target="#login_modal" type="button" class="btn btn-primary btn-sm">+ Want To See List</button>
+                            </form>
+                        </div>
+
+                        <form th:action="@{/postMovieReview}" method="post" class="w-100" id="postReviewForm">
+                            <input name="movieId" type="hidden" th:value="${movie.movieId}"/>
+                            <input name="rating" id="rating" class="rating rating-loading" th:value="${review}?${review.rating}:'0'" data-min="0" data-size="xxs"/>
+                            <textarea name="review" class="form-control" id="review" rows="3" style="resize: none;" th:text="${review}?${review.review}:''"></textarea>
+                            <div class="d-flex w-100 mt-1">
+                                <button sec:authorize="isAuthenticated()" th:unless="${review}" type="button" id="postReview" class="btn btn-primary btn-sm ml-auto">POST</button>
+                                <button sec:authorize="isAuthenticated()" th:if="${review}" type="button" id="editReview" class="btn btn-primary btn-sm ml-auto">EDIT</button>
+                                <button sec:authorize="isAnonymous()" data-toggle="modal" data-target="#login_modal" type="button" class="btn btn-primary btn-sm ml-auto">POST</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Server response modal -->
+                <div class="modal fade" id="serverResponseModal" tabindex="-1" role="dialog" aria-labelledby="serverResponseModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div th:fragment="serverResponseModalContent" class="modal-content" id="serverResponseModalContent" style="color: black;">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel" th:text="${title}?: 'Processing'"></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" th:text="${body}?: 'Processing your request...'"></div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- movie info -->
+            <div class="jumbotron details-jumbotron">
+                <h6 class="border-bottom border-gray pb-2 mb-0">MOVIE INFO</h6>
+                <dl class="row mt-4">
+                    <dt class="col-sm-3">Rating:</dt>
+                    <dd class="col-sm-9" th:text="${movie.mpaaRating}">N/A</dd>
+
+                    <dt class="col-sm-3">Genre:</dt>
+                    <dd class="col-sm-9" th:if="${movie.genre.isEmpty()}">N/A</dd>
+                    <dd class="col-sm-9" th:unless="${movie.genre.isEmpty()}">
+                        <th:block th:each="genre,iterStat : ${movie.genre}" th:if="${iterStat.index<5}">
+                            <span th:text="${genre.genre}"></span>
+                            <span th:if="${iterStat.index < movie.genre.size()-1 and iterStat.index < 4}" class="mr-1">,</span>
+                        </th:block>
+                    </dd>
+
+                    <dt class="col-sm-3">Directed by:</dt>
+                    <dd class="col-sm-9" th:text="${movie.director}">N/A</dd>
+
+                    <dt class="col-sm-3">Written by:</dt>
+                    <dd class="col-sm-9" th:if="${movie.writers.isEmpty()}">N/A</dd>
+                    <dd class="col-sm-9" th:unless="${movie.writers.isEmpty()}">
+                        <th:block th:each="writer,iterStat : ${movie.writers}" th:if="${iterStat.index<5}">
+                            <span th:text="${writer.writer}"></span>
+                            <span th:if="${iterStat.index < movie.writers.size()-1 and iterStat.index < 4}" class="mr-1">,</span>
+                        </th:block>
+                    </dd>
+
+                    <dt class="col-sm-3">In theaters:</dt>
+                    <dd class="col-sm-9" th:text="${movie.getDateString()}">N/A</dd>
+
+                    <dt class="col-sm-3">Run time:</dt>
+                    <dd class="col-sm-9" th:text="${movie.runtime}">N/A</dd>
+                </dl>
+                <p class="text-justify" th:text="${movie.overview}">
+                    N/A
+                </p>
+            </div>
+
+            <!-- Trailer -->
+            <div th:if="${trailers.size()>0}" class="details-jumbotron mt-1 mb-4">
+                <h6 class="border-bottom border-gray pb-2 mb-0">TRAILERS</h6>
+                <div class="row container">
+                    <div th:each="trailer,iterStat : ${trailers}" th:if="${iterStat.index<4}" class="video-thumbnail-container">
+                        <img th:src="@{${trailer.videoThumb}}" class="video-thumbnail-img" alt="video_thumbnail"/>
+                        <a href="#" data-toggle="modal" th:attr="data-target=${'#trailer'+iterStat.index}">
+                        <div class="video-img-overlay">
+                            <img class="glyph-icon" src="svg/si-glyph-circle-triangle-right.svg"/>
+                        </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="mt-4"><a th:href="@{/movie_trailers(id=${movie.movieId})}"><p class="text-right">See All Trailers</p></a></div>
+            </div>
+
+            <!-- Trailer Modal -->
+            <div th:each="trailer,iterStat : ${trailers}" th:if="${trailers.size()>0 and iterStat.index<4}" class="modal fade trailer" th:id="${'trailer'+iterStat.index}" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content video-modal">
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" th:src="@{${trailer.video}}" controls="controls"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Movie photos -->
+            <div th:if="${screenshots.size()>0}" id="detail-photo-carousel">
+                <!-- <h6 class="pl-4 pb-2 mb-0">PHOTOS</h6> -->
+                <div id="carousel-details-photo" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div th:each="photo,iterStat : ${screenshots}" th:class="${iterStat.index==0}?'carousel-item active':'carousel-item'">
+                        <img class="d-block w-100" th:src="@{${photo.screenshot}}" alt="..."/>
+                        </div>
+
+                        <!-- buttons -->
+                        <a class="carousel-control-prev" href="#carousel-details-photo" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carousel-details-photo" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+
+                    <!-- Indicators -->
+                    <ol class='carousel-indicators'>
+                        <li th:each="photo,iterStat : ${screenshots}" data-target='#carousel-details-photo' th:attr="data-slide-to=${iterStat.index}" th:class="${iterStat.index==0}?'active'">
+                            <img th:src="@{${photo.screenshot}}" alt='' />
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+
+            <!-- Cast Info -->
+            <div th:if="${actors.size()>0}" class="jumbotron details-jumbotron">
+                <h6 class="border-bottom border-gray pb-2 mb-0">CAST INFO</h6>
+                <div id="cast-card-deck" class="card-deck mt-5">
+                    <div class="col-sm-4 col-md-3 col-lg-3 mb-3" th:each="actor,iterStat : ${actors}" th:unless="${iterStat.index>7}">
+                        <div class="card">
+                            <a th:href="@{/actor_details(id=${actor.actorId})}">
+                                <img class="card-img-top" th:src="@{(${actor.actor.headshot==''}?'/img/default.gif':${actor.actor.headshot})}" alt="Card image cap"/>
+                            </a>
+                            <div class="card-body">
+                            <p class="card-title" th:text="${actor.actor.firstName+' '+actor.actor.lastName}">Name</p>
+                            <!--<p class="card-subtitle" th:text="${}">role</p>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4"><a th:href="@{/movie_all_actors(id=${movie.movieId})}"><p class="text-right">See all actors</p></a></div>
+            </div>
+
+            <!-- Reviews -->
+            <div id="reviews">
+                <div class="jumbotron details-jumbotron" th:fragment="reviews">
+                    <div th:unless="${criticReviews.size()>0 or userReviews.size()>0}">
+                        <h6 class="border-bottom border-gray pb-2 mb-2">REVIEWS</h6>
+                        <span>No review yet.</span>
+                    </div>
+                    <!-- Critic Reviews -->
+                    <h6 th:if="${criticReviews.size()>0}" class="border-bottom border-gray pb-2 mb-0">CRITIC REVIEWS</h6>
+                    <div th:each="criticReview,iterStat : ${criticReviews}" th:if="${iterStat.index<10}" class="media flex-md-row pt-3">
+                        <div class="review-thumbnail-container">
+                            <a th:href="@{/criticHome(criticId=${criticReview.critic.criticId})}">
+                                <img th:src="@{(${criticReview.critic.photo}?: '/img/default.gif')}" alt="..." class="review-img-thumbnail"/>
+                            </a>
+                        </div>
+                        <div class="d-flex flex-column align-items-start w-100">
+                            <div class="d-flex w-100 mb-1">
+                                <div>
+                                    <span class="ml-2">@</span>
+                                    <a th:href="@{/criticHome(criticId=${criticReview.critic.criticId})}" style="color: white;">
+                                        <span th:text="|${criticReview.critic.firstName} ${criticReview.critic.lastName}|">@User Name</span>
+                                    </a>
+                                </div>
+                                <div class="ml-auto mr-1">Score:</div>
+                                <div class="d-flex">
+                                    <input class="rating rating-loading score p-0" th:value="${criticReview.rating}" data-stars="5" data-min="0" data-max="5" data-size="xxxs" disabled=true data-show-clear="false" data-show-caption="false"/>
+                                    <span th:text="${(criticReview.rating)?:'N/A'}" class="mr-2">N/A</span>
+                                    <a href="#" sec:authorize="isAuthenticated()" th:attr="data-id=${criticReview.reviewId}" class="report report-movie-user-review ion-alert-circled"></a>
+                                </div>
+                            </div>
+                            <p class="media-body pb-3 mb-0 small lh-125 border-bottom w-100" th:text="${criticReview.review}">
+                                Review
+                            </p>
+                        </div>
+                    </div>
+                    <small th:unless="${criticReviews.isEmpty()}" class="d-block text-right mt-3">
+                        <a th:href="@{/movie_all_critics(id=${movie.movieId})}">All Critic Reviews</a>
+                    </small>
+
+                    <!-- User(Audience) Reviews -->
+                    <h6 th:if="${userReviews.size()>0}" class="border-bottom border-gray pb-2 mb-0 mt-4">USER REVIEWS</h6>
+                    <div th:each="userReview,iterStat : ${userReviews}" th:if="${iterStat.index<6}" class="media flex-md-row pt-3">
+                        <div class="review-thumbnail-container">
+                            <a th:href="@{/userInformation(userName=${userReview.user.username})}">
+                                <img th:src="@{(${userReview.user.photo}?: '/img/default.gif')}" alt="..." class="review-img-thumbnail"/>
+                            </a>
+                        </div>
+                        <div class="d-flex flex-column align-items-start w-100">
+                            <div class="d-flex w-100 mb-1">
+                                <div>
+                                    <a th:href="@{/userInformation(userName=${userReview.user.username})}" style="color: white;">
+                                        <span class="ml-2">@</span>
+                                        <span th:text="${userReview.user.username}">User Name</span>
+                                    </a>
+                                </div>
+                                <div class="ml-auto mr-1">Score:</div>
+                                <div class="d-flex">
+                                    <input class="rating rating-loading score p-0" th:value="${userReview.rating}" data-stars="5" data-min="0" data-max="5" data-size="xxxs" disabled=true data-show-clear="false" data-show-caption="false"/>
+                                    <span th:text="${userReview.rating==''?'score':userReview.rating}" class="mr-2">score</span>
+                                    <a href="#" sec:authorize="isAuthenticated()" th:attr="data-id=${userReview.reviewId}" class="report report-movie-user-review ion-alert-circled"></a>
+
+                                </div>
+                            </div>
+                            <p class="media-body pb-3 mb-0 small lh-125 border-bottom w-100" th:text="${userReview.review}" style="min-height: 3rem;">
+                                Review
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- Report confirmation modal -->
+<div class="modal fade" id="reportConfirmModal" tabindex="-1" role="dialog" aria-labelledby="reportConfirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="deleteConfirmModalContent" style="color: black;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="report-modal-title">Report</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <input name="reportType" id="reportType" type="hidden"/>
+            <form th:action="@{/}" method="post" id="report-form">
+                <div class="modal-body" id="report-modal-body">
+                    <h6>Do you want to report?</h6>
+                    <span class="mt-2">Reason:</span>
+                    <input name="id" id="reportId" type="hidden"/>
+                    <textarea name="reason" class="form-control" id="reason" rows="3" style="resize: none;"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button id="confirm-report" type="button" class="btn btn-danger" data-dismiss="modal">Report</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- footer -->
+<div th:replace="fragments/footer">Navbar</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="../../js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<script src="../../js/popper.min.js" th:src="@{/js/popper.min.js}"></script>
+<script src="../../js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<script src="../../js/star-rating.js" th:src="@{/js/star-rating.js}"></script>
+<script th:inline="javascript">
+    var stopVideo = function ( element ) {
+        var iframe = element.querySelector( 'iframe');
+        var video = element.querySelector( 'video' );
+        if ( iframe !== null ) {
+            var iframeSrc = iframe.src;
+            iframe.src = iframeSrc;
+        }
+        if ( video !== null ) {
+            video.pause();
+        }
+    };
+
+    $(document).ready(function(){
+        $('.modal.trailer').on('shown.bs.modal', function (e) {
+            /*$(this).find('video')[0].play();
+            var symbol = $("#video1")[0].src.indexOf("?") > -1 ? "&" : "?";
+            $("#video1")[0].src += symbol + "autoplay=1";
+            */
+        });
+        $('.modal.trailer').on('hidden.bs.modal', function (e) {
+            /*$(this).find('video')[0].pause();*/
+            stopVideo(this);
+        });
+    });
+
+    $(document).on("click", "#addToWantToSee", function () {
+        $.ajax({
+            method: "POST",
+            url: "/movie/addToWantToSeeList",
+            data: $('#addToWantToSeeListForm').serialize(),
+            success: function(data){
+                $('#serverResponseModalContent').replaceWith(data);
+                $("#serverResponseModal").modal('show');
+            }
+        });
+    });
+
+    $(document).on("click", "#addToNotInterested", function () {
+        $.ajax({
+            method: "POST",
+            url: "/movie/addToDontWantToSeeList",
+            data: $('#addToNotInterestedForm').serialize(),
+            success: function(data){
+                $('#serverResponseModalContent').replaceWith(data);
+                $("#serverResponseModal").modal('show');
+            }
+        });
+    });
+
+    $(document).on("click", "#postReview", function () {
+        value = $("#rating").val();
+        if (!(value)){
+            $("#serverResponseModal").find('.modal-title').text("Select score");
+            $("#serverResponseModal").find('.modal-body').text("Please select a score.");
+            $("#serverResponseModal").modal('show');
+        } else{
+            $.ajax({
+                method: "POST",
+                url: "/postMovieReview",
+                data: $('#postReviewForm').serialize(),
+                success: function(data){
+                    $("#serverResponseModalContent").replaceWith(data);
+                    $("#serverResponseModal").modal('show');
+                    url1 = /*[[@{/movie/reviewForm(movieId=${movie.movieId})}]]*/ '';
+                    url2 = /*[[@{/movie/reviews(movieId=${movie.movieId})}]]*/ '';
+                    $("#reviewForm").load(url1)
+                    $("#reviews").load(url2);
+                }
+            });
+        }
+    });
+
+    $(document).on("click", "#editReview", function () {
+        value = $("#rating").val();
+        if (!(value)){
+            $("#serverResponseModal").find('.modal-title').text("Select score");
+            $("#serverResponseModal").find('.modal-body').text("Please select a score.");
+            $("#serverResponseModal").modal('show');
+        } else{
+            $.ajax({
+                method: "POST",
+                url: "/editMovieReview",
+                data: $('#postReviewForm').serialize(),
+                success: function(data){
+                    $("#serverResponseModalContent").replaceWith(data);
+                    $("#serverResponseModal").modal('show');
+                    url1 = /*[[@{/movie/reviewForm(movieId=${movie.movieId})}]]*/ '';
+                    url2 = /*[[@{/movie/reviews(movieId=${movie.movieId})}]]*/ '';
+                    $("#reviewForm").load(url1)
+                    $("#reviews").load(url2);
+                }
+            });
+        }
+    });
+
+    $( document ).ajaxComplete(function( event, xhr, settings ) {
+        $(".rating").rating({});
+    });
+
+
+
+    $(document).on('click', '.report-movie-user-review', function(){
+        var id =  $(this).data("id");
+        $('#reportType').val('movie-user-review');
+        $('#reportId').val(id);
+        $('#report-modal-title').text('Report User Review');
+        $("#reportConfirmModal").modal('show');
+    });
+
+    $(document).on('click', '.report-movie-critic-review', function(){
+        var id =  $(this).data("id");
+        $('#reportType').val('movie-critic-review');
+        $('#reportId').val(id);
+        $('#report-modal-title').text('Report Critic Review');
+        $("#reportConfirmModal").modal('show');
+    });
+
+    $("#confirm-report").on("click", function () {
+        var url = '';
+        var report_type = $('#reportType').val();
+        if(report_type == 'movie-user-review'){
+            url = '/movie/reportUserReview';
+        } else if (report_type == 'movie-critic-review'){
+            url = '/movie/reportCriticReview';
+        }
+        console.log($('#reportId').val());
+        $.ajax({
+            method: "POST",
+            url: url,
+            data: $('#report-form').serialize(),
+            success: function(data){
+                $('#serverResponseModalContent').replaceWith(data);
+                $("#serverResponseModal").modal('show');
+                $('#reason').val('');
+            }
+        });
+    });
+
+</script>
+
+</body>
+</html>

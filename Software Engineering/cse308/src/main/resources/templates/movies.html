@@ -1,0 +1,163 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta http-equiv="Content-Type" content="text/html"/>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="../../css/my_style.css" th:href="@{/css/my_style.css}"/>
+    <link rel="stylesheet" href="../../fonts/ionicons.min.css" th:href="@{/fonts/ionicons.min.css}"/>
+    <link rel="stylesheet" href="../../css/Footer-Clean.css" th:href="@{/css/Footer-Clean.css}"/>
+
+    <title>Movies</title>
+</head>
+
+
+<body>
+<!-- Navbar -->
+<div sec:authorize="isAnonymous()"><div th:replace="fragments/navbar">Navbar</div></div>
+<div sec:authorize="hasRole('ROLE_USER')"><div th:replace="fragments/user_navbar">Navbar</div></div>
+<div sec:authorize="hasRole('ROLE_CRITIC')"><div th:replace="fragments/user_navbar">Navbar</div></div>
+<div sec:authorize="hasRole('ROLE_ADMIN')"><div th:replace="fragments/admin_navbar">Navbar</div></div>
+
+<div class="container">
+    <!-- Side navbar -->
+    <div class="row">
+        <div class="col-lg-4 mb-3">
+            <div class="jumbotron-side">
+                <h6><strong>IN THEATERS</strong></h6>
+                <nav class="nav flex-column w-100">
+                    <a class="nav-link side active text-white" th:href="@{/movies/opening}">Opening This Week</a>
+                    <a class="nav-link side text-white" th:href="@{/movies/topbox}">Top Box Office</a>
+                    <a class="nav-link side text-white" th:href="@{/movies/coming}">Coming Soon</a>
+                    <a class="nav-link side text-white" th:href="@{/movies/highest}">Highest Rated</a>
+                    <a class="nav-link side text-white" href="/academy_awards?year=2015">Academy Awards</a>
+                </nav>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <!-- search options bar -->
+            <h5><strong th:text="${listType}">OPENING THIS WEEK</strong></h5>
+            <div class="row sort-option mt-4">
+                <div class="col-auto mr-auto">
+                    <input type="range"/>
+                </div>
+                <div class="col-auto">
+                    <div class="dropdown">
+                        <div class="d-flex">
+                            <strong class="mr-1">Sorted by:</strong>
+                            <div id="sortby"><!-- sort by option-->option</div>
+                        </div>
+                        <div class="dropdown-content">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" th:checked="true"/>
+                                <label class="form-check-label" for="exampleRadios1">
+                                    Default radio
+                                </label>
+                                </div>
+                                <div class="form-check">
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2"/>
+                                <label class="form-check-label" for="exampleRadios2">
+                                    Second default radio
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grid style option buttons -->
+            <ul class="nav nav-pills mb-3 mt-3" id="pills-tab" role="tablist">
+                <li class="nav-item ml-auto">
+                    <a class="nav-link active" id="small-grid" data-toggle="pill" href="#pills-small" role="tab" aria-controls="pills-small" aria-selected="true"><i class="icon ion-grid"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="large-gird" data-toggle="pill" href="#pills-large" role="tab" aria-controls="pills-large" aria-selected="false"><i class="icon ion-navicon-round"></i></a>
+                </li>
+            </ul>
+
+            <!-- populated result -->
+            <div class="tab-content" id="pills-tabContent">
+                <!-- small grid -->
+                <div class="tab-pane fade show active" id="pills-small" role="tabpanel" aria-labelledby="pills-small-tab">
+                    <div class="row justify-content-center mt-4">
+                        <div class="search-result-container">
+                            <div th:each="movie,iterStat : ${selectedList}" th:if="${iterStat.current.getPoster() != ''}" class="search-result-small">
+                                <div class="search-result-small-poster-container">
+                                    <a th:href="@{/movie_details(id=${movie.getMovieId()})}">
+                                        <img th:src="@{${movie.getPoster()}}" class="search-result-small-poster" alt="poster"/>
+                                    </a>
+                                </div>
+                                <div class="flex-colums text-center text-truncate">
+                                    <div th:text="${movie.getTitle()}" class="search-result-text text-truncate p-1">
+                                        Movie title
+                                    </div>
+                                    <div th:unless="${topbox}" th:text="${movie.getDateString()}" class="search-result-text">
+                                        no score
+                                    </div>
+                                    <div th:if="${topbox}" th:text="|$${movie.getRevenue()}|" class="search-result-text">
+                                        no score
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- large grid -->
+                <div class="tab-pane fade" id="pills-large" role="tabpanel" aria-labelledby="pills-large-tab">
+                    <div th:each="movie,iterStat : ${selectedList}" th:if="${iterStat.current.poster != ''}" class="search-result-large d-flex">
+                        <div class="search-result-large-poster-container">
+                            <a th:href="@{/movie_details(id=${movie.movieId})}">
+                                <img th:src="@{${movie.poster}}" class="search-result-large-poster" alt="poster">
+                            </a>
+                        </div>
+                        <div class="d-flex flex-column align-items-start ml-3">
+                            <h5 class="mb-0">
+                                <span th:text="${movie.title}" class="detail-title">Movie Title</span>
+                            </h5>
+                            <div>
+                                <strong class="mr-3">Date:</strong>
+                                <span th:text="${movie.getReleaseDate()}">Overview</span>
+                            </div>
+                            <div>
+                                <span class="mr-2">Score:</span>
+                                <span th:text="${movie.ratingAvg}">no score</span>
+                            </div>
+                            <div th:text="${movie.overview}" class="search-result-large_description">
+                                Made his first advertisement for Matchbox cars at age 14. Met long-time friend Tobey Maguire when both were auditioning for the 1990-91 sitcom Parenthood (DiCaprio won the part). Portrayed homeless Luke Brower, who was taken in by the Seaver family, on the ABC series Growing Pains from 1991 to 1992. Made a brief appearance as "First Guy" in Drew Barrymore's 1992 film Poison Ivy. Sued Playgirl magazine in 1998 to stop publication of nude photos of him; the case was settled out of court. An ardent environmentalist, established the Leonardo DiCaprio Foundation in 1998 to champion his favorite conservation causes. In 2007, he received Golden Globe and SAG nominations for his performances in The Departedand Blood Diamond. Produced and narratedthe documentary The 11th Hour tohelpraise awareness abouttheeffect of human impact on the planet. Reunited with Titanic co-star Kate Winslet for Revolutionary Road (2008), their second film together.
+                            </div>
+                            <div class=" w-100 text-right mt-2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="container text-center mt-3 mb-3">
+    <a target="_blank" href="https://adclick.g.doubleclick.net/pcs/click?xai=AKAOjsuW0I9OQVKOiWTnETUY51KDAwh-QgwrDB22euHjMHQ1VHKxiQbJ6MfKVOc5Nslc9J0QQzJs_-pMt6oMw-9hVijtxCW4Wv2JYoToAiT24ovnZDr69CBIuv4VFN3B9gMjO9ISWOxirmG1UrIIg37T3mR_PlJxwhQii4HOBzz9FfFKJL0weDV6ll-O140p48tScKaYV03_AL8njnJZN-3vamo-4QN_GGG3yjGc5Z-2s5fzRLnz4TaM_CTH6y5nAD5pBySekAouHhzjsjAZfLKgEjXcGkrUMLDJC0zWFUtnYe2JZzc99cWlju3JICcfk0JcVh2x8CbmW8Dsif7FofW-QQuZ7zesawImLtaDiA&amp;sai=AMfl-YRUVnL7Hsa3FOHqmtBPwtFaNmP9cOcNjdvGjrcoNUwkMoeNuZsG8lkTIFfwSkGDIsPVOH-RfnhMMI4EbuVNmdJTOHYgm9fjqm8zCJpgpZEh-v1pAOvjtpDQfxY&amp;sig=Cg0ArKJSzN9Qqm86pAKl&amp;urlfix=1&amp;adurl=https://try.digitalocean.com/performance/%3Futm_medium%3Ddisplay%26utm_source%3Dstackoverflow%26utm_campaign%3D2018_Brand%26utm_content%3DDO_UI_728x90_Light%26utm_term%3DNewYork">
+        <img src="https://s0.2mdn.net/8354950/1-DO_UI_728x90_Light.jpg" alt="Advertisement" border="0" width="728" height="90" class="align-content-center">
+    </a>
+</div>
+
+<!-- footer -->
+<div th:replace="fragments/footer">Navbar</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="../../js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<script src="../../js/popper.min.js" th:src="@{/js/popper.min.js}"></script>
+<script src="../../js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+
+</body>
+</html>
